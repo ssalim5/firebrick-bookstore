@@ -11,11 +11,11 @@ const _setBook = (book) => {
   };
 };
 
-export const fetchBook = () => {
+export const fetchBook = (bookId) => {
   return async (dispatch) => {
     try {
       //Api link
-      const {data} = await axios.get("unknown link");
+      const {data} = await axios.get(`/api/books/${bookId}`);
       dispatch(_setBook(data));
     } catch (err) {
       console.log(err);
