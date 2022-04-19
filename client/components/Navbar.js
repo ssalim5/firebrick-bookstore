@@ -8,7 +8,8 @@ import CartIcon from '../assets/CartIcon.svg';
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className = 'd-flex flex-wrap align-items-center bg-info'>
     <div className='ms-4 me-auto p-2' >
-    <h1 className='navHeader'>FireBrick Book Store</h1>
+    <Link to="/"><h1 className='navHeader'>FireBrick Book Store</h1></Link>
+
     </div>
     <nav>
       {isLoggedIn ? (
@@ -21,7 +22,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               <SearchIcon width ={25} height= {25} style = {{cursor : 'pointer'}}/>
 
           </formal>
-          <Link to="/home">Home</Link>
+          <Link to="/userProfile">Profile</Link>
           <CartIcon width ={25} height= {25} style = {{cursor : 'pointer'}}/>
           <a href="#" onClick={handleClick}>
             Logout
