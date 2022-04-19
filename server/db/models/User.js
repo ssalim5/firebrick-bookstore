@@ -22,6 +22,9 @@ const User = db.define('user', {
     allowNull: false,
     validate: { isEmail: true }
   },
+  address : {
+    type: Sequelize.STRING,
+  },
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
