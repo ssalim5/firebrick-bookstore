@@ -23,9 +23,11 @@ router.get("/:bookId", async(req, res, next) => {
   }
 })
 
+//****NEED TO MAKE THESE ROUTES ONLY FOR ADMIN****
 // POST /api/books
 router.post("/", async(req, res, next) => {
   try {
+
     res.send( await Book.create(req.body) )
   } catch (error) {
     next(error)
