@@ -3,20 +3,28 @@ const {Adlibris} = require('book-api');
 
 const source = new Adlibris();
 
-// Search for books
-// source.search('Engineering')
-// .then(books => {
-//   source.fetch(books[0]).then(book => {
-//     console.log(JSON.stringify(book, null, 2));
-//   });
-// });
+let booksToAdd = [];
 
-source.search('Engineering')
+let minQuantity = 4;
+let maxQuantity = 128;
+
+source.search('Culture')
 .then(books => books.forEach(book => {
   source.fetch(book).then(book => {
-    console.log(book)
-  })
-}));
+    let bookAdd = {
+      title: book.title,
+      author: book.authors[0],
+      cover: book.images[0].url,
+      price: (book.marketPrices[0].value * .1),
+      quantity: (Math.floor(Math.random() * maxQuantity) + minQuantity)
+    }
+    booksToAdd.push(bookAdd)
+
+    console.log(bookAdd)
+
+    console.log(booksToAdd)
+  });
+}))
 
 
 
