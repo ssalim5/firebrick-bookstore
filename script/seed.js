@@ -1,7 +1,7 @@
 'use strict'
 
 const {db, models: {User, Book} } = require('../server/db');
-const books = require('../server/db/models/seedBooks.js')
+const booksToSeed = require('../server/db/models/seedBooks.js')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -9,7 +9,7 @@ const books = require('../server/db/models/seedBooks.js')
  */
 
 
-console.log(books)
+console.log(booksToSeed.books)
 
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
@@ -22,6 +22,20 @@ async function seed() {
   ])
 
   console.log(`seeded ${users.length} users`)
+
+  let booksSeeded = [];
+
+  for (let i = 0; i < booksToSeed.books.length; i++){
+    console.log(booksToSeed.books[i])
+
+    const seededBook = await Book.create(booksToSeed.books[i]);
+
+    booksSeeded.push(seededBook);
+
+  }
+
+  console.log(booksSeeded.length, 'books seeded.')
+
   console.log(`seeded successfully`)
   return {
     users: {
@@ -30,7 +44,6 @@ async function seed() {
     }
   }
 
-  // Creating Books
 
 }
 

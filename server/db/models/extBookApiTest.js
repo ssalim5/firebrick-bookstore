@@ -8,7 +8,12 @@ let booksToAdd = [];
 let minQuantity = 4;
 let maxQuantity = 128;
 
-source.search('Culture')
+
+// The reason this console logs the list of books instead of simply exporting
+// is because I simply couldn't figure out how to do it, and it seemed like a waste
+// of time to continue.
+
+source.search('Hydrology')
 .then(books => books.forEach(book => {
   source.fetch(book).then(book => {
     let bookAdd = {
@@ -19,9 +24,7 @@ source.search('Culture')
       quantity: (Math.floor(Math.random() * maxQuantity) + minQuantity)
     }
     booksToAdd.push(bookAdd)
-
     console.log(bookAdd)
-
     console.log(booksToAdd)
   });
 }))
