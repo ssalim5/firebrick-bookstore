@@ -7,7 +7,7 @@ const Book = db.define('book', {
     unique: true,
     allowNull: false
   },
-  authors: {
+  author: {
     type: Sequelize.STRING,
     allowNull: false
   },
