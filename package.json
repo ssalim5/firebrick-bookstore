@@ -1,7 +1,7 @@
 {
-  "name": "fs-app-template",
+  "name": "firebrick-graceshopper",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Firebrick's graceshopper project",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -40,6 +40,8 @@
     "chai": "^4.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
+    "eslint": "^8.13.0",
+    "eslint-plugin-react": "^7.29.4",
     "esm": "^3.2.25",
     "mocha": "^6.2.3",
     "nodemon": "^1.19.4",
