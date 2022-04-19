@@ -1,22 +1,43 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, models: {User, Book} } = require('../server/db');
+const booksToSeed = require('../server/db/models/seedBooks.js')
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
+
+
+console.log(booksToSeed.books)
+
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123', email: 'cody@pug.com' }),
-    User.create({ username: 'murphy', password: '123', email: 'murphy@beds.com' }),
+    User.create({ username: 'cody', password: '123', email: 'cody@pug.com',
+     address:  '220 Welton Way, Pofton, NY'}),
+    User.create({ username: 'murphy', password: '123', email: 'murphy@beds.com',
+    address:  '10 Burden Blvd, Crimes Hollow, NY'}),
   ])
 
   console.log(`seeded ${users.length} users`)
+
+  let booksSeeded = [];
+
+  for (let i = 0; i < booksToSeed.books.length; i++){
+    console.log(booksToSeed.books[i])
+
+    const seededBook = await Book.create(booksToSeed.books[i]);
+
+    booksSeeded.push(seededBook);
+
+  }
+
+  console.log(booksSeeded.length, 'books seeded.')
+
   console.log(`seeded successfully`)
   return {
     users: {
@@ -24,6 +45,8 @@ async function seed() {
       murphy: users[1]
     }
   }
+
+
 }
 
 /*

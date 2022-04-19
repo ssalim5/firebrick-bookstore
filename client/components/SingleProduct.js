@@ -1,15 +1,13 @@
 import React from 'react'
 import {useDispatch,useSelector} from 'react-redux'
-
+import {useParams} from 'react-router'
 /**
  * COMPONENT
  */
-export const Home = () => {
-
-  // In this home page we may have two render page admin vs user , if the user is admin then render different view
-
+export const SingleProduct = () => {
+  const productId = useParams(); // this will get the id from router '/products/:productId'
   const dispatch = useDispatch(); // we will use this one to fetch book data
-
+  //next step fetch single book with dispatch.
   return (
     <div className='d-flex vh-100 m-5'>
       <div className='bg-success w-25' >
@@ -23,4 +21,5 @@ export const Home = () => {
   )
 }
 
-export default Home;
+
+export default SingleProduct;
