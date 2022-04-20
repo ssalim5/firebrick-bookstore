@@ -19,6 +19,12 @@ async function seed() {
      address:  '220 Welton Way, Pofton, NY'}),
     User.create({ username: 'murphy', password: '123', email: 'murphy@beds.com',
     address:  '10 Burden Blvd, Crimes Hollow, NY'}),
+    User.create({ username: 'phony', password: '123', email: 'phony@wrong.com',
+    address:  '101 Goose Street, Tammany, NY'}),
+    User.create({ username: 'yeoman', password: '123', email: 'yeoman@oops.com',
+    address:  '111 Coriander Ct, Scoopton, NY'}),
+    User.create({ username: 'clam', password: '123', email: 'under@thesea.com',
+    address:  '92 Offal Ave, Gutrend, NY'}),
   ])
 
   console.log(`seeded ${users.length} users`)
@@ -30,9 +36,9 @@ async function seed() {
   for (let i = 0; i < booksToSeed.books.length; i++){
     console.log(booksToSeed.books[i])
 
-    const seededBook = await Book.create(booksToSeed.books[i]);
+    const seededbook = await Book.create(booksToSeed.books[i]);
 
-    booksSeeded.push(seededBook);
+    booksSeeded.push(seededbook);
 
   }
 
@@ -44,10 +50,7 @@ async function seed() {
   let cartMax = 12;
 
   let bookList = booksSeeded;
-
   let bookListLength = bookList.length;
-
-  console.log(bookList[1] instanceof Book)
 
   for (let i = 0; i < users.length; i++){
 
@@ -61,9 +64,7 @@ async function seed() {
 
       let randomBook = bookList[Math.floor(Math.random() * bookListLength)]
 
-      console.log(randomBook instanceof Book)
-
-      await randomBook.setCart(users[i])
+      await randomBook.addUser(users[i])
 
      }
 
