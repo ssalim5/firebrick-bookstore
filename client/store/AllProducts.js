@@ -23,10 +23,10 @@ export const fetchBooks = () => {
   };
 };
 
-export default function AllProductsReducer(state = initialState, action) {
+export default (state = initialState, action) => {
   switch(action.type) {
     case SET_BOOKS:
-      return [...action.books];
+      return action.books;
     default:
       return state;
   }

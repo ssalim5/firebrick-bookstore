@@ -10,11 +10,11 @@ label {
   display: block;
 }
 
-nav a {
+/* nav a {
   display: inline-block;
   margin: 1em;
   color:white
-}
+} */
 
 
 form div {
@@ -29,9 +29,28 @@ form{
   margin-top: 50px;
 }
 
-.navHeader{
+/* .navHeader{
   color: white;
   font-size: 35px;
   line-height: 80px;
   padding: 0 30px;
+} */
+
+.books{
+
+  margin-top: 15px;
+  margin-right : 25px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content:flex-start;
+
+
+}
+
+img {
+  width: 250px;
+  height: 200px;
+
 }

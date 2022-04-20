@@ -1,69 +1,94 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import { Button } from 'react-bootstrap';
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
-import SearchIcon from '../assets/SearchIcon.svg'
-import CartIcon from '../assets/CartIcon.svg';
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div className = 'd-flex flex-wrap align-items-center bg-info'>
-    <div className='ms-4 me-auto p-2' >
-    <Link to="/"><h1 className='navHeader'>FireBrick Book Store</h1></Link>
-
-    </div>
-    <nav>
-      {isLoggedIn ? (
-        <div className=''>
-          {/* The navbar will show these links after you log in */}
-          <formal >
-              <label htmlFor="search">
-              </label>
-              <input className = 'me-2'name="search" type="text" placeholder='type for search' />
-              <SearchIcon width ={25} height= {25} style = {{cursor : 'pointer'}}/>
-
-          </formal>
-          <Link to="/userProfile">Profile</Link>
-          <CartIcon width ={25} height= {25} style = {{cursor : 'pointer'}}/>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+import React from "react";
+import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import SearchIcon from "../assets/SearchIcon.svg";
+import CartIcon from "../assets/CartIcon.svg";
+const Navbar = ({ handleClick, isLoggedIn }) => (
+  <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div className="container">
+        <a href="/" className="navbar-brand">
+          FireBrick Book Store
+        </a>
+        <div className="collapse navbar-collapse">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <a href="/" className="nav-link active">
+              Home
+            </a>
+          </li>
+        </ul>
         </div>
-      ) : (
-        <div className='me-4'>
-          <formal >
-              <label htmlFor="search">
-              </label>
-              <input className = 'me-2'name="search" type="text" placeholder='type for search' />
-              <SearchIcon width ={25} height= {25}/>
-          </formal>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+        <div>
+        {isLoggedIn ? (
+          <div className="shopping-cart d-flex align-items-center position-relative">
+            {/* The navbar will show these links after you log in */}
+            <div className="me-3">
+              <label htmlFor="search"></label>
+              <input
+                className="me-2"
+                name="search"
+                type="text"
+                placeholder="type for search"
+              />
+              <button type="button" className="btn-cart btn btn-primary ">
+              <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+            <Link className = "text-white me-2" to="/userProfile">Profile</Link>
+            <button type="button" className="btn-cart btn btn-primary position-relative me-2">
+              <i className="fas fa-shopping-cart"></i>
+              <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">0</span>
+            </button>
+            <a className= "text-white" href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div className="shopping-cart d-flex align-items-center position-relative">
+            <div className="me-3">
+              <label htmlFor="search"></label>
+              <input
+                className="me-2"
+                name="search"
+                type="text"
+                placeholder="type for search"
+              />
+              <button type="button" className="btn-cart btn btn-primary ">
+              <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+            {/* The navbar will show these links before you log in */}
+            <Link className="text-white me-3" to="/login">Login</Link>
+            <Link className="text-white" to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </div>
+      </div>
+
+
+      <hr />
     </nav>
-    <hr />
   </div>
-)
+);
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!state.auth.id,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
-
-
-
+export default connect(mapState, mapDispatch)(Navbar);
