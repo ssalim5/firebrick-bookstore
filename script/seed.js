@@ -9,8 +9,6 @@ const booksToSeed = require('../server/db/models/seedBooks.js')
  */
 
 
-console.log(booksToSeed.books)
-
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
@@ -21,22 +19,56 @@ async function seed() {
      address:  '220 Welton Way, Pofton, NY'}),
     User.create({ username: 'murphy', password: '123', email: 'murphy@beds.com',
     address:  '10 Burden Blvd, Crimes Hollow, NY'}),
+    User.create({ username: 'phony', password: '123', email: 'phony@wrong.com',
+    address:  '101 Goose Street, Tammany, NY'}),
+    User.create({ username: 'yeoman', password: '123', email: 'yeoman@oops.com',
+    address:  '111 Coriander Ct, Scoopton, NY'}),
+    User.create({ username: 'clam', password: '123', email: 'under@thesea.com',
+    address:  '92 Offal Ave, Gutrend, NY'}),
   ])
 
   console.log(`seeded ${users.length} users`)
 
-  let booksSeeded = [];
+  // Creating books
+
+  let booksSeeded = []
 
   for (let i = 0; i < booksToSeed.books.length; i++){
     console.log(booksToSeed.books[i])
 
-    const seededBook = await Book.create(booksToSeed.books[i]);
+    const seededbook = await Book.create(booksToSeed.books[i]);
 
-    booksSeeded.push(seededBook);
+    booksSeeded.push(seededbook);
 
   }
 
   console.log(booksSeeded.length, 'books seeded.')
+
+  // Creating carts...
+
+  let cartMin = 2;
+  let cartMax = 12;
+
+  let bookList = booksSeeded;
+  let bookListLength = bookList.length;
+
+  for (let i = 0; i < users.length; i++){
+
+    let cartSize = Math.floor(Math.random() * cartMax + cartMin)
+
+    let j = 0;
+
+    while (j < cartSize) {
+
+      j++;
+
+      let randomBook = bookList[Math.floor(Math.random() * bookListLength)]
+
+      await randomBook.addUser(users[i])
+
+     }
+
+  }
 
   console.log(`seeded successfully`)
   return {
