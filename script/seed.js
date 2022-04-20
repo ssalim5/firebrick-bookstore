@@ -1,13 +1,12 @@
 'use strict'
 
-const {db, models: {User, Book} } = require('../server/db');
+const {db, models: {User, Book, Order, Order_Products} } = require('../server/db');
 const booksToSeed = require('../server/db/models/seedBooks.js')
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
-
 
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
@@ -39,31 +38,38 @@ async function seed() {
 
   console.log(booksSeeded.length, 'books seeded.')
 
-  // Creating carts...
+  let orders = []
+  // Creating Orders...
+  for(let i = 0; i < users.length; i++){
+    const order = await Order.create()
+    orders.push(order)
+    await order.setUser( users[i] )
+  }
 
+  //Filling Orders
   let orderMin = 2;
   let orderMax = 12;
 
   let bookList = booksSeeded;
   let bookListLength = bookList.length;
 
-  for (let i = 0; i < users.length; i++){
-
+  for (let i = 0; i < orders.length; i++){
     let orderSize = Math.floor(Math.random() * orderMax + orderMin)
 
     let j = 0;
-
+    const order = orders[i]
     while (j < orderSize) {
-
       j++;
-
-      let randomBook = bookList[Math.floor(Math.random() * bookListLength)]
-
-      await randomBook.addUser(users[i])
-
-     }
+      const randomBook = bookList[ Math.floor(Math.random() * bookListLength) ]
+      const randQuantity = Math.floor( Math.random()*randomBook.quantity )
+      await randomBook.addOrder(order, { through:
+        {
+          quantity: randQuantity,
+          subtotal_price: randomBook.price*randQuantity
+        }
+      })
+    }
   }
-
   console.log(`seeded successfully`)
   return {
     users: {
@@ -71,8 +77,6 @@ async function seed() {
       murphy: users[1]
     }
   }
-
-
 }
 
 /*
