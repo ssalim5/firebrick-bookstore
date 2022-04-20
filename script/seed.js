@@ -34,6 +34,32 @@ async function seed() {
 
     booksSeeded.push(seededBook);
 
+<<<<<<< Updated upstream
+=======
+  //Filling Orders
+  let orderMin = 2;
+  let orderMax = 12;
+
+  let bookList = booksSeeded;
+  let bookListLength = bookList.length;
+
+  for (let i = 0; i < orders.length; i++){
+    let orderSize = Math.floor(Math.random() * orderMax + orderMin)
+
+    let j = 0;
+    const order = orders[i]
+    while (j < orderSize) {
+      j++;
+      const randomBook = bookList[ Math.floor(Math.random() * bookListLength) ]
+      const randQuantity = Math.floor( Math.random()*randomBook.quantity )
+      await order.addBook(randomBook, { through:
+        {
+          quantity: randQuantity,
+          subtotal_price: randomBook.price*randQuantity
+        }
+      })
+    }
+>>>>>>> Stashed changes
   }
 
   console.log(booksSeeded.length, 'books seeded.')
