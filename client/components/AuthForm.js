@@ -8,6 +8,10 @@ import {authenticate} from '../store'
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
+  // Checks to see if the current path is the signup page
+  const isSignup = props.location.pathname === '/signup'
+
+
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -17,6 +21,13 @@ const AuthForm = props => {
           </label>
           <input name="username" type="text" />
         </div>
+
+        {isSignup ?
+        <div>
+          Really
+        </div>
+           : ''}
+
         <div>
           <label htmlFor="password">
             <small>Password</small>
