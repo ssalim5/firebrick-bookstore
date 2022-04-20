@@ -9,8 +9,6 @@ const booksToSeed = require('../server/db/models/seedBooks.js')
  */
 
 
-console.log(booksToSeed.books)
-
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
@@ -25,7 +23,9 @@ async function seed() {
 
   console.log(`seeded ${users.length} users`)
 
-  let booksSeeded = [];
+  // Creating books
+
+  let booksSeeded = []
 
   for (let i = 0; i < booksToSeed.books.length; i++){
     console.log(booksToSeed.books[i])
@@ -37,6 +37,37 @@ async function seed() {
   }
 
   console.log(booksSeeded.length, 'books seeded.')
+
+  // Creating carts...
+
+  let cartMin = 2;
+  let cartMax = 12;
+
+  let bookList = booksSeeded;
+
+  let bookListLength = bookList.length;
+
+  console.log(bookList[1] instanceof Book)
+
+  for (let i = 0; i < users.length; i++){
+
+    let cartSize = Math.floor(Math.random() * cartMax + cartMin)
+
+    let j = 0;
+
+    while (j < cartSize) {
+
+      j++;
+
+      let randomBook = bookList[Math.floor(Math.random() * bookListLength)]
+
+      console.log(randomBook instanceof Book)
+
+      await randomBook.setCart(users[i])
+
+     }
+
+  }
 
   console.log(`seeded successfully`)
   return {
