@@ -1,10 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
-import SearchIcon from "../assets/SearchIcon.svg";
-import CartIcon from "../assets/CartIcon.svg";
+
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
