@@ -5,8 +5,8 @@ const { models: { Cart }} = require('../db')
 // GET /api/carts
 router.get("/", async(req, res, next) => {
   try {
-    const books = await Cart.findAll()
-    res.json(books)
+    const carts = await Cart.findAll()
+    res.json(carts)
   } catch (error) {
     next(error)
   }
@@ -15,8 +15,8 @@ router.get("/", async(req, res, next) => {
 // GET /api/carts/:cartId
 router.get("/:cartId", async(req, res, next) => {
   try {
-    const book = await Cart.findByPk(req.params.bookId)
-    res.json(book)
+    const cart = await Cart.findByPk(req.params.cartId)
+    res.json(cart)
   } catch (error) {
     next(error)
   }
@@ -26,7 +26,6 @@ router.get("/:cartId", async(req, res, next) => {
 // POST /api/carts
 router.post("/", async(req, res, next) => {
   try {
-
     res.send( await Cart.create(req.body) )
   } catch (error) {
     next(error)
@@ -36,7 +35,7 @@ router.post("/", async(req, res, next) => {
 // PUT /api/carts/:cartId
 router.put("/:cartId", async (req, res, next) => {
   try {
-    const cart = await Cart.findByPk(req.params.bookId)
+    const cart = await Cart.findByPk(req.params.cartId)
     res.send( await cart.update(req.body) )
   } catch (error) {
     next(error)
@@ -46,7 +45,7 @@ router.put("/:cartId", async (req, res, next) => {
 // DELETE /api/carts/:cartId
 router.delete("/:cartId", async(req, res, next) => {
   try {
-    const cart = await Cart.findByPk(req.param.bookId)
+    const cart = await Cart.findByPk(req.param.cartId)
     await cart.destroy()
     res.send(cart)
   } catch (error) {
