@@ -30,35 +30,30 @@ async function seed() {
   console.log(`seeded ${users.length} users`)
 
   // Creating books
-
   let booksSeeded = []
-
   for (let i = 0; i < booksToSeed.books.length; i++){
     console.log(booksToSeed.books[i])
-
     const seededbook = await Book.create(booksToSeed.books[i]);
-
     booksSeeded.push(seededbook);
-
   }
 
   console.log(booksSeeded.length, 'books seeded.')
 
   // Creating carts...
 
-  let cartMin = 2;
-  let cartMax = 12;
+  let orderMin = 2;
+  let orderMax = 12;
 
   let bookList = booksSeeded;
   let bookListLength = bookList.length;
 
   for (let i = 0; i < users.length; i++){
 
-    let cartSize = Math.floor(Math.random() * cartMax + cartMin)
+    let orderSize = Math.floor(Math.random() * orderMax + orderMin)
 
     let j = 0;
 
-    while (j < cartSize) {
+    while (j < orderSize) {
 
       j++;
 
@@ -67,7 +62,6 @@ async function seed() {
       await randomBook.addUser(users[i])
 
      }
-
   }
 
   console.log(`seeded successfully`)
