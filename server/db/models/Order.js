@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Cart = db.define('cart', {
-
+const Order = db.define('order', {
+  amount: D
 })
 
-module.exports = Cart;
+module.exports = Order;
