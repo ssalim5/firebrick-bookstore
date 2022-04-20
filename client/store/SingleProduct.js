@@ -23,7 +23,7 @@ export const fetchBook = (bookId) => {
   };
 };
 
-export default function SingleProductsReducer(state = initialState, action) {
+export default (state = initialState, action) => {
   switch(action.type) {
     case SET_BOOK:
       return {...action.book};
