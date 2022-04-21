@@ -1,10 +1,6 @@
 const router = require('express').Router()
 const { models: { User }} = require('../db')
-<<<<<<< Updated upstream
-const { models: { Book }} = require('../db')
-=======
 const Order = require('../db/models/Order')
->>>>>>> Stashed changes
 module.exports = router
 
 // GET /api/users
@@ -68,17 +64,6 @@ router.delete("/:userId", async(req, res, next) => {
     const user = await User.findByPk(req.param.orderId)
     await user.destroy()
     res.send(user)
-  } catch (error) {
-    next(error)
-  }
-})
-
-
-// GET /api/users/:id/books
-router.get("/:id/books", async (req, res, next) => {
-  try {
-    const books = await User.findAll( {include: Book} )
-    res.json(books)
   } catch (error) {
     next(error)
   }

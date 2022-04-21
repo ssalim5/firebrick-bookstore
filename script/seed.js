@@ -33,9 +33,8 @@ async function seed() {
     const seededBook = await Book.create(booksToSeed.books[i]);
 
     booksSeeded.push(seededBook);
+  }
 
-<<<<<<< Updated upstream
-=======
   //Filling Orders
   let orderMin = 2;
   let orderMax = 12;
@@ -59,7 +58,6 @@ async function seed() {
         }
       })
     }
->>>>>>> Stashed changes
   }
 
   console.log(booksSeeded.length, 'books seeded.')
@@ -71,8 +69,6 @@ async function seed() {
       murphy: users[1]
     }
   }
-
-
 }
 
 /*
