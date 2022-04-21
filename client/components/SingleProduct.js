@@ -23,7 +23,7 @@ export const SingleProduct = () => {
 
 
   console.log("Reaching component.")
-  console.log(book);
+  console.log(typeof book.price);
 
   return (
     <div className='d-flex vh-100 m-5'>
@@ -31,7 +31,20 @@ export const SingleProduct = () => {
         <h3>Filtering div</h3>
       </div>
       <div className='bg-danger w-75'>
+        <img style={{ height: "66%"}}
+        src={book.cover} />
         <h3>{book.title}</h3>
+        <div>
+        <a className="btn btn-info text-white">Add To Cart</a>
+        <div style={{ display: "inline-block"}}>
+        <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center" width>
+          {"$"}
+          {Number.parseFloat(book.price).toFixed(2)}
+        </span>
+        </div>
+        </div>
+
+
       </div>
 
     </div>
