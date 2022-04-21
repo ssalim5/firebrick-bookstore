@@ -18,7 +18,6 @@ class Routes extends Component {
   }
 
   render() {
-    //console.log('routes',this.props)
     const {isLoggedIn} = this.props
 
     return (
@@ -26,7 +25,8 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route  path="/userprofile" component={UserProfile}/>
+            <Route path="/cart" component={Cart} />
+            <Route path="/userProfile/:userId" component={UserProfile}/>
             <Route path="/products/:productId" component={ SingleProduct } />
           </Switch>
         ) : (

@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { _setCounter,_setProducts } from "../store/Cart";
+const book = ({book,counter}) => {
 
-const book = (props) => {
-  const book = props.book;
+  const dispatch = useDispatch()
+
   return (
     <div key={book.id} className="col-lg-3 col-md-6 mb-4">
       <div className="card h-100">
@@ -26,7 +29,10 @@ const book = (props) => {
               justifyContent: "space-between",
             }}
           >
-            <a className="btn btn-info text-white">Add To Cart</a>
+            <a className="btn btn-info text-white" onClick={() => {
+              dispatch(_setCounter(counter + 1))
+              dispatch(_setProducts(book))
+            }}>Add To Cart</a>
             <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center">
               {"$"}
               {book.price.toFixed(2)}

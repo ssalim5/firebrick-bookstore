@@ -27,7 +27,6 @@ router.get("/:bookId", async(req, res, next) => {
 // POST /api/books
 router.post("/", async(req, res, next) => {
   try {
-
     res.send( await Book.create(req.body) )
   } catch (error) {
     next(error)
