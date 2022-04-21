@@ -10,6 +10,7 @@ const cart = (props) => {
   //   dispatch(fetchCart(1));
   // }
   useEffect( () => {
+    //Have to fetchCart particular number for particular ID
     dispatch(fetchCart(2));
   }, [dispatch])
   console.log(books);
