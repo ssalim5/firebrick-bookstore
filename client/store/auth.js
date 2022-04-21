@@ -31,21 +31,6 @@ export const me = () => async dispatch => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const updateUserThunk = (user) => async dispatch => {
   try{
     console.log(user)
@@ -63,7 +48,9 @@ export const authenticate = (username, password, method, email, address) => asyn
   try {
     const res = await axios.post(`/auth/${method}`, {username, password, email, address})
     window.localStorage.setItem(TOKEN, res.data.token)
+    history.push('/')
     dispatch(me())
+
   } catch (authError) {
     return dispatch(setAuth({error: authError}))
   }
