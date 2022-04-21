@@ -1,17 +1,18 @@
 import axios from "axios";
 
-<<<<<<< HEAD
-const initialState = [];
+
+const initialState = {counter : 0,
+  productsArray : []};
+
 
 const SET_CART = "SET_CART";
 const DELETE_ITEM = "DELETE_ITEM";
 
-const _setCart = (books) => {
-  return {
-    type: SET_CART,
-    books
-  }
-}
+const SET_COUNTER = "SET_COUNTER";
+const SET_PRODUCTS = "SET_PRODUCTS";
+
+
+//action creators
 
 const _deleteItem = (books) => {
   return {
@@ -20,12 +21,25 @@ const _deleteItem = (books) => {
   }
 }
 
+export const _setCounter = (num) => {
+  return{
+    type : SET_COUNTER,
+    num
+  }
+};
+
+export const _setProducts = (products) => {
+  return{
+    type : SET_PRODUCTS,
+    products
+  }}
+
 export const fetchCart = (orderId) => {
   return async (dispatch) => {
     try {
       //make a userId route
-      const {data} = await axios.get(`api/orders/${orderId}books`);
-      dispatch(_setCart(data));
+      const {data} = await axios.get(`api/orders/${orderId}/books`);
+      dispatch(_setProducts(data));
     } catch (err) {
       console.log(err);
     }
@@ -44,50 +58,15 @@ export const deleteItem = (userId, bookId) => {
    }
 }
 
-export default (state = initialState, action) => {
-  switch(action.type) {
-    case SET_CART:
-        return action.books;
-    default:
-      return state;
-=======
-
-const SET_COUNTER = 'SET_COUNTER';
-const SET_PRODUCTS = 'SET_PRODUCTS';
-
-
-//action creators
-
-export const _setCounter = (num) => {
-  return{
-    type : SET_COUNTER,
-    num
-  }
-};
-
-export const _setProducts = (products) => {
-  return{
-    type : SET_PRODUCTS,
-    products
-  }}
-
-//
-
-
-const initialState = {counter : 0,
-  productsArray : []};
-
-
-
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_COUNTER:
       return {...state, counter : action.num};
     case SET_PRODUCTS:
+      console.log("Action",action)
       return {...state,productsArray : [...state.productsArray,action.products]};
     default:
       return state
->>>>>>> main
   }
 }

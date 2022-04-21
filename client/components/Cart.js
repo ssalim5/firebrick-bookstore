@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchCart} from "../store/Cart";
 
 const cart = (props) => {
-  //const [books, setBooks] = useState([]);
-  const books = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const books = useSelector(state => state.cart);
 
-  const cartInfo = dispatch(fetchCart());
-  console.log(cartInfo);
+  // function fetchData() {
+  //   dispatch(fetchCart(1));
+  // }
+  useEffect( () => {
+    dispatch(fetchCart(2));
+  }, [dispatch])
+  console.log(books);
   return (
     <a>
       <div className="cart">
-        {books.map( book => {
+        {books.productsArray.length > 0 ? books.productsArray.map( book => {
           return (
             <div key={book.id}>
               <img src={book.cover}></img>
@@ -20,9 +24,8 @@ const cart = (props) => {
             </div>
           );
 
-        })}
+        }): <div> No books in cart </div>}
         </div>
-      <button> check </button>
 
     </a>
     )
