@@ -6,6 +6,7 @@ import auth from './auth'
 import AllProducts from "./AllProducts";
 import SingleProduct from "./SingleProduct";
 
+
 const reducer = combineReducers({ auth : auth,
   allProducts : AllProducts,
   singleProduct : SingleProduct,

@@ -3,18 +3,30 @@ import {useDispatch,useSelector} from 'react-redux'
 import {useState} from 'react'
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import {updateUserThunk} from '../store/auth';
+
 export const UserProfile = (props) => {
-
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
-
   const [username, setUsername] = useState(user.username)
-
   const [email,setEmail] = useState(user.email);
   const [address,setAddress] = useState(user.address)
+  let updateObj = {
+    id : user.id,
+    username : username,
+    email : email,
+    address : address,
+  }
+  console.log(props)
   return (
     <div className= "container mt-5">
       <div>
-        <Form onSubmit={null}>
+        <Form onSubmit={(e) => {
+          e.preventDefault()
+          console.log('heyy')
+          dispatch(updateUserThunk({...user,...updateObj}))
+
+        }}>
           <Form.Group className="mb-3 mt-3" controlId="name">
             <Form.Label>Campus Name</Form.Label>
             <Form.Control
@@ -50,7 +62,7 @@ export const UserProfile = (props) => {
           <Button variant="primary" type="submit">
             Submit
           </Button>
-          <Link className="ms-2" to="/campuses">
+          <Link className="ms-2" to="/">
             Cancel
           </Link>
           </div>
