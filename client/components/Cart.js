@@ -13,7 +13,6 @@ const cart = (props) => {
     //Have to fetchCart particular number for particular ID
     dispatch(fetchCart(2));
   }, [dispatch])
-  console.log(books);
   return (
     <a>
       <div className="cart">
