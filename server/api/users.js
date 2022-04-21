@@ -61,7 +61,7 @@ router.post("/", async(req, res, next) => {
 // DELETE /api/users/:userId
 router.delete("/:userId", async(req, res, next) => {
   try {
-    const user = await User.findByPk(req.param.orderId)
+    const user = await User.findByPk(req.params.userId)
     await user.destroy()
     res.send(user)
   } catch (error) {
