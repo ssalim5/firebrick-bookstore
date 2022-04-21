@@ -28,7 +28,7 @@ export const UserProfile = (props) => {
 
         }}>
           <Form.Group className="mb-3 mt-3" controlId="name">
-            <Form.Label>Campus Name</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control
               name="name"
               value={username}
@@ -60,10 +60,10 @@ export const UserProfile = (props) => {
               justifyContent: "space-between",
             }}>
           <Button variant="primary" type="submit">
-            Submit
+            Change
           </Button>
           <Link className="ms-2" to="/">
-            Cancel
+            Go Back
           </Link>
           </div>
         </Form>

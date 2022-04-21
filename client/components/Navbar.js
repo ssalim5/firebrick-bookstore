@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn,user }) => {
+const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
+  console.log(cart)
   return (
   <div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -39,7 +40,7 @@ const Navbar = ({ handleClick, isLoggedIn,user }) => {
             <Link className = "text-white me-2" to={`/userprofile/${user.id}`}>Profile</Link>
             <button type="button" className="btn-cart btn btn-primary position-relative me-2">
               <i className="fas fa-shopping-cart"></i>
-              <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">0</span>
+              <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">{cart.counter}</span>
             </button>
             <a className= "text-white" href="#" onClick={handleClick}>
               Logout
@@ -81,6 +82,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
     user: state.auth,
+    cart : state.cart,
   };
 };
 
