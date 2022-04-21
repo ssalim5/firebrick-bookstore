@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Cart from './components/Cart';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile'
+import SingleProduct from './components/SingleProduct';
 import {me} from './store'
 import { fetchBooks } from './store/AllProducts';
 
@@ -18,7 +19,6 @@ class Routes extends Component {
   }
 
   render() {
-
     const {isLoggedIn} = this.props
 
     return (
@@ -27,13 +27,15 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/cart" component={Cart} />
-            <Route  path="/userProfile/:userId" component={UserProfile}/>
+            <Route path="/userProfile/:userId" component={UserProfile}/>
+            <Route path="/products/:productId" component={ SingleProduct } />
           </Switch>
         ) : (
           <Switch>
             <Route path='/' exact component={ Home } />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/products/:productId" component={ SingleProduct } />
           </Switch>
         )}
       </div>
