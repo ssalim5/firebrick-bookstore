@@ -1,11 +1,62 @@
 import React from "react";
-
+import {useDispatch,useSelector} from 'react-redux'
+import {useState} from 'react'
+import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 export const UserProfile = (props) => {
-  // const {userId,.......} = props ----- user info probably passed with props.
 
+  const user = useSelector((state) => state.auth);
+
+  const [username, setUsername] = useState(user.username)
+
+  const [email,setEmail] = useState(user.email);
+  const [address,setAddress] = useState(user.address)
   return (
-    <div>
-      <h1>userProfile page </h1>
+    <div className= "container mt-5">
+      <div>
+        <Form onSubmit={null}>
+          <Form.Group className="mb-3 mt-3" controlId="name">
+            <Form.Label>Campus Name</Form.Label>
+            <Form.Control
+              name="name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="address">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              name="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </Form.Group>
+          <div style={{
+              width : '233px',
+              display: "flex",
+              alignItems: 'center',
+              justifyContent: "space-between",
+            }}>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+          <Link className="ms-2" to="/campuses">
+            Cancel
+          </Link>
+          </div>
+        </Form>
+      </div>
+
     </div>
   );
 };

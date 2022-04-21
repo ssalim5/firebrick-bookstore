@@ -1,15 +1,12 @@
 'use strict'
 
-const {db, models: {User, Book} } = require('../server/db');
+const {db, models: {User, Book, Order, Order_Products} } = require('../server/db');
 const booksToSeed = require('../server/db/models/seedBooks.js')
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
-
-
-console.log(booksToSeed.books)
 
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
@@ -21,18 +18,32 @@ async function seed() {
      address:  '220 Welton Way, Pofton, NY'}),
     User.create({ username: 'murphy', password: '123', email: 'murphy@beds.com',
     address:  '10 Burden Blvd, Crimes Hollow, NY'}),
+    User.create({ username: 'phony', password: '123', email: 'phony@wrong.com',
+    address:  '101 Goose Street, Tammany, NY'}),
+    User.create({ username: 'yeoman', password: '123', email: 'yeoman@oops.com',
+    address:  '111 Coriander Ct, Scoopton, NY'}),
+    User.create({ username: 'clam', password: '123', email: 'under@thesea.com',
+    address:  '92 Offal Ave, Gutrend, NY'}),
   ])
 
   console.log(`seeded ${users.length} users`)
 
-  let booksSeeded = [];
-
+  // Creating books
+  let booksSeeded = []
   for (let i = 0; i < booksToSeed.books.length; i++){
     console.log(booksToSeed.books[i])
+    const seededbook = await Book.create(booksToSeed.books[i]);
+    booksSeeded.push(seededbook);
+  }
 
-    const seededBook = await Book.create(booksToSeed.books[i]);
+  console.log(booksSeeded.length, 'books seeded.')
 
-    booksSeeded.push(seededBook);
+  let orders = []
+  // Creating Orders...
+  for(let i = 0; i < users.length; i++){
+    const order = await Order.create()
+    orders.push(order)
+    await order.setUser( users[i] )
   }
 
   //Filling Orders
@@ -51,7 +62,7 @@ async function seed() {
       j++;
       const randomBook = bookList[ Math.floor(Math.random() * bookListLength) ]
       const randQuantity = Math.floor( Math.random()*randomBook.quantity )
-      await order.addBook(randomBook, { through:
+      await randomBook.addOrder(order, { through:
         {
           quantity: randQuantity,
           subtotal_price: randomBook.price*randQuantity
@@ -59,9 +70,6 @@ async function seed() {
       })
     }
   }
-
-  console.log(booksSeeded.length, 'books seeded.')
-
   console.log(`seeded successfully`)
   return {
     users: {

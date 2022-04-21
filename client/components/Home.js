@@ -1,26 +1,29 @@
-import React from 'react'
-import {useDispatch,useSelector} from 'react-redux'
-
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {useState} from 'react'
+import BooksList from "./BooksList";
 /**
  * COMPONENT
  */
 export const Home = () => {
+  const books = useSelector((state) => state.allProducts);
+  console.log(books);
 
-  // In this home page we may have two render page admin vs user , if the user is admin then render different view
-
-  const dispatch = useDispatch(); // we will use this one to fetch book data
+  const [counter,setCounter] = useState(0);
+  const [itemsArray,setItemsArray] = useState([]);
+  // cart counter and items array
 
   return (
-    <div className='d-flex vh-100 m-5'>
-      <div className='bg-success w-25' >
-        <h3>Filtering div</h3>
+    <section className="products mt-5">
+      <div className="container">
+        <div className="row">
+          {books.map((book) => {
+            return <BooksList key={book.id} book={book}  />;
+          })}
+        </div>
       </div>
-      <div className='bg-danger w-75'>
-        <h3>books div</h3>
-      </div>
-
-    </div>
-  )
-}
+    </section>
+  );
+};
 
 export default Home;

@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile'
 import {me} from './store'
+import { fetchBooks } from './store/AllProducts';
 
 /**
  * COMPONENT
@@ -12,9 +13,11 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.loadBookData()
   }
 
   render() {
+    console.log('routes',this.props)
     const {isLoggedIn} = this.props
 
     return (
@@ -52,6 +55,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    loadBookData(){
+      dispatch(fetchBooks())
     }
   }
 }
