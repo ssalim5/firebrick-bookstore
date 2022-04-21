@@ -26,12 +26,11 @@ async function seed() {
     address:  '92 Offal Ave, Gutrend, NY'}),
   ])
 
-  console.log(`seeded ${users.length} users`)
+  console.log(users.length, "users seeded.")
 
   // Creating books
   let booksSeeded = []
   for (let i = 0; i < booksToSeed.books.length; i++){
-    console.log(booksToSeed.books[i])
     const seededbook = await Book.create(booksToSeed.books[i]);
     booksSeeded.push(seededbook);
   }
@@ -43,8 +42,11 @@ async function seed() {
   for(let i = 0; i < users.length; i++){
     const order = await Order.create()
     orders.push(order)
-    await order.setUser(users[i])
+    await order.setUser(await User.findByPk(i+1))
   }
+
+  console.log(orders.length, 'orders seeded.')
+
 
   //Filling Orders
   let orderMin = 2;
