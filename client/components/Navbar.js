@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
-  console.log(cart)
+const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
+  //console.log(cart)
   return (
   <div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">

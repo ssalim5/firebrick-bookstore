@@ -10,10 +10,10 @@ const cart = () => {
   // function fetchData() {
   //   dispatch(fetchCart(1));
   // }
-  //console.log(user.id)
+  //console.log(books)
 
+  //Have to fetchCart particular number for particular ID
   useEffect( () => {
-    //Have to fetchCart particular number for particular ID
     dispatch(fetchCart(user.id));
   }, [dispatch])
   return (

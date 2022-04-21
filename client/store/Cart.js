@@ -5,8 +5,8 @@ const initialState = {counter : 0,
   productsArray : []};
 
 
-const SET_CART = "SET_CART";
 const DELETE_ITEM = "DELETE_ITEM";
+const ADD_ITEM = "ADD_ITEM";
 
 const SET_COUNTER = "SET_COUNTER";
 const SET_PRODUCTS = "SET_PRODUCTS";
@@ -18,6 +18,13 @@ const _deleteItem = (books) => {
   return {
     type: DELETE_ITEM,
     books
+  }
+}
+
+export const _addItem = (products) => {
+  return{
+    type: ADD_ITEM,
+    products
   }
 }
 
@@ -58,19 +65,38 @@ export const deleteItem = (userId, bookId) => {
    }
 }
 
+export const addItem = (userId, book) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.post(`api/orders/${userId}`, book);
+      dispatch(_addItem(data));
+    } catch (err){
+      console.log(err);
+    }
+  }
+
+
+
+}
+
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_COUNTER:
       return {...state, counter : action.num};
-    case SET_PRODUCTS:
-      let newProducts;
-      if (action.products.length > 0) {
-        newProducts = action.products.map(product => {
+    case ADD_ITEM:
+        let newProducts;
+        console.log("running case ADD_ITEM")
+        if (action.products.length > 0) {
+          newProducts = action.products.map(product => {
             return product;
-        })
-      }
-      return {...state,productsArray : [...state.productsArray, ...newProducts]};
+          })
+        }
+        return {...state,productsArray : [...state.newProducts]};
+    case SET_PRODUCTS:
+        console.log("running case SET_PRODUCTS")
+        console.log(action)
+      return [...action.products];
     default:
       return state
   }
