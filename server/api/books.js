@@ -46,7 +46,7 @@ router.put("/:bookId", async (req, res, next) => {
 // DELETE /api/books/:bookId
 router.delete("/:bookId", async(req, res, next) => {
   try {
-    const book = await Book.findByPk(req.param.bookId)
+    const book = await Book.findByPk(req.params.bookId)
     await book.destroy()
     res.send(book)
   } catch (error) {
