@@ -38,45 +38,37 @@ async function seed() {
 
   console.log(booksSeeded.length, 'books seeded.')
 
-  let orders = []
   // Creating Orders...
+  let orders = []
   for(let i = 0; i < users.length; i++){
     const order = await Order.create()
     orders.push(order)
-    await order.setUser( users[i] )
+    await order.setUser(users[i])
   }
 
   //Filling Orders
   let orderMin = 2;
   let orderMax = 12;
-
-  let bookList = booksSeeded;
-  let bookListLength = bookList.length;
+  let booksSeededLength = booksSeeded.length;
 
   for (let i = 0; i < orders.length; i++){
-    let orderSize = Math.floor(Math.random() * orderMax + orderMin)
+    let orderSize = Math.floor(Math.random() * (orderMax-orderMin) + orderMin)
 
     let j = 0;
     const order = orders[i]
     while (j < orderSize) {
       j++;
-      const randomBook = bookList[ Math.floor(Math.random() * bookListLength) ]
-      const randQuantity = Math.floor( Math.random()*randomBook.quantity )
-      await randomBook.addOrder(order, { through:
+      const randomBook = booksSeeded[ Math.floor(Math.random() * booksSeededLength) ]
+      const randQuantity = Math.floor( Math.random()*(randomBook.stock-1) + 1 )
+      await order.addBook(randomBook, { through:
         {
-          quantity: randQuantity,
+          order_quantity: randQuantity,
           subtotal_price: randomBook.price*randQuantity
         }
       })
     }
   }
   console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
 }
 
 /*

@@ -1,48 +1,21 @@
 const router = require('express').Router()
 module.exports = router
-const { models: { Order }} = require('../db')
-const Book = require('../db/models/Book')
-const User = require('../db/models/User')
+const { models: { Order, Book, User }} = require('../db')
 
 // GET /api/orders
-// Get all orders
+// Get all orders with the books inside each order
 router.get("/", async(req, res, next) => {
   try {
-    const orders = await Order.findAll()
-    res.json(orders)
+    const ordersAndBooks = await Order.findAll({include: Book})
+    res.json(ordersAndBooks)
   } catch (error) {
     next(error)
   }
 })
 
-// GET /api/orders/:orderId
-// Get an order
-router.get("/:orderId", async(req, res, next) => {
-  try {
-    const order = await Order.findByPk(req.params.orderId)
-    res.json(order)
-  } catch (error) {
-    next(error)
-  }
-})
-
-// GET /api/orders/:orderId/books
-// Get books inside an order
-router.get( "/order=:orderId/books", async(req, res, next) => {
- try {
-   const orderAndBooks = await Order.findOne({
-     where: {id: req.params.orderId},
-     include: Book
-   })
-   res.json(orderAndBooks)
- } catch (error) {
-   next(error)
- }
-})
-
-// GET /api/orders/:userId/books
-// Get books in a users's unfulfilled order
-router.get( "/user=:userId/books", async(req, res, next) => {
+// GET /api/orders/:userId/
+// Get user's unfulfilled order and the books inside of it
+router.get( "/:userId", async(req, res, next) => {
   try {
     const userOrder = await Order.findOne({
       where: {
@@ -50,11 +23,23 @@ router.get( "/user=:userId/books", async(req, res, next) => {
         isCompleted: false
       }
     })
+    if(!userOrder){
+      let error = Error('User order not found')
+      error.status = 404
+      throw(error)
+    }
+
     const orderId = userOrder.id
     const orderAndBooks = await Order.findOne({
       where: {id: orderId},
       include: Book
     })
+    if(!orderAndBooks){
+      let error = Error('Matching order not found')
+      error.status = 404
+      throw(error)
+    }
+
     res.json(orderAndBooks)
   } catch (error) {
     next(error)
@@ -67,6 +52,11 @@ router.post("/:userId", async(req, res, next) => {
   try {
     const order = await Order.create(req.body)
     const user = await User.findByPk(req.params.userId)
+    if(!user){
+      let error = Error('User not found')
+      error.status = 404
+      throw(error)
+    }
     await order.setUser(user)
     res.send(order)
   } catch (error) {
@@ -79,30 +69,57 @@ router.post("/:userId", async(req, res, next) => {
 // -Add new book to order
 // -Update quantity
 
-// PUT /api/orders/:orderId
-// To complete an order:
-router.put("/:orderId", async (req, res, next) => {
+// PUT /api/orders/:userId
+// To complete user's unfulfilled order:
+router.put("/:userId", async (req, res, next) => {
   try {
-    const order = await Order.findByPk(req.params.orderId)
-    res.send( await order.update(req.body) )
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCompleted: false
+      }
+    })
+    if( !userOrder ){
+      let error = Error('User order not found')
+      error.status = 404
+      throw(error)
+    }
+    res.send( await userOrder.update(req.body) )
   } catch (error) {
     next(error)
   }
 })
 
-// POST /api/orders/:orderId/:bookId
+// POST /api/orders/:userId/:bookId/:quantity
 // Add a new book to an order
-router.post("/:orderId/:bookId/:quantity", async (req, res, next) => {
+router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, next) => {
   try {
-    const order = await Order.findByPk(req.params.orderId)
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCompleted: false
+      }
+    })
+    if( !userOrder ){
+      let error = Error('User order not found')
+      error.status = 404
+      throw(error)
+    }
+
     const newBook = await Book.findByPk( req.params.bookId )
-    order.addBook( newBook, { through:
+    if(!newBook){
+      let error = Error('Book not found')
+      error.status = 404
+      throw(error)
+    }
+
+    await userOrder.addBook( newBook, { through:
       {
-        quantity: req.params.quantity,
+        order_quantity: req.params.quantity,
         subtotal_price: newBook.price*req.params.quantity
       }
     })
-    res.send( newBook )
+    res.send(newBook)
   } catch (error) {
     next(error)
   }
@@ -110,42 +127,97 @@ router.post("/:orderId/:bookId/:quantity", async (req, res, next) => {
 
 // PUT /api/orders/:orderId/:bookId
 // Update quantity of a book in an order
-// ** IN PROGRESS **
-// router.put( "/:orderId/:bookId", async(req, res, next) => {
-//   try {
-//     const orderAndBook = Order.findOne({
-//       where: {id: req.params.orderId},
-//       include: {
-//         model: Book,
-//         where: {id: req.params.bookId}
-//       }
-//     })
-//     console.log(orderAndBook)
-//     res.json(orderAndBook)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.put( "/user=:userId/book=:bookId", async(req, res, next) => {
+  try {
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCompleted: false
+      }
+    })
+    if(!userOrder){
+      let error = Error("User order not found")
+      error.status = 404
+      throw(error)
+    }
+
+    const book = await Book.findByPk(req.params.bookId)
+    if(!book){
+      let error = Error("Book not found")
+      error.status = 400
+      throw error
+    }
+
+    const oldBook = (await Order.findOne({
+      where: {id: userOrder.id},
+      include:[{
+        model: Book,
+        where: {id: req.params.bookId}
+      }]
+    })).books[0]
+    const old_quantity = oldBook.order_products.order_quantity
+
+    await userOrder.removeBook(book)
+    const newBook = await userOrder.addBook(book, {through:
+      {
+        order_quantity: old_quantity+1,
+        subtotal_price: oldBook.price*(old_quantity+1)
+      }
+    })
+    res.json(newBook)
+  } catch (error) {
+    next(error)
+  }
+})
 
 // DELETE /api/orders/:orderId/:bookId
 // Remove book from order
-router.delete("/:orderId/:bookId", async(req, res, next) => {
+router.delete("/user=:userId/book=:bookId", async(req, res, next) => {
   try {
-    const order = await Order.findByPk(req.params.orderId)
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCompleted: false
+      }
+    })
+    if(!userOrder){
+      let error = Error('User order not found')
+      error.status = 404
+      throw(error)
+    }
 
-    res.send(order)
+    const book = await Book.findByPk( req.params.bookId )
+    if(!book){
+      let error = Error('Book not found')
+      error.status = 404
+      throw(error)
+    }
+
+    await userOrder.removeBook(book)
+    res.send(book)
   } catch (error) {
     next(error)
   }
 })
 
 // DELETE /api/orders/:orderId
-// Remove an order
-router.delete("/:orderId", async(req, res, next) => {
+// Remove user's pending order
+router.delete("/:userId", async(req, res, next) => {
   try {
-    const order = await Order.findByPk(req.params.orderId)
-    await order.destroy()
-    res.send(order)
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCompleted: false
+      }
+    })
+    if(!userOrder){
+      let error = Error('User order not found')
+      error.status = 404
+      throw(error)
+    }
+
+    await userOrder.destroy()
+    res.send(userOrder)
   } catch (error) {
     next(error)
   }
