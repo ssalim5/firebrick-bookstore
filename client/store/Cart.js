@@ -23,7 +23,7 @@ export const _setProducts = (products) => {
 //
 
 
-const initialState = {counter : 3,
+const initialState = {counter : 0,
   productsArray : []};
 
 
@@ -34,7 +34,7 @@ export default function(state = initialState, action) {
     case SET_COUNTER:
       return {...state, counter : action.num};
     case SET_PRODUCTS:
-      return {...state, productsArray : action.products};
+      return {...state,productsArray : [...state.productsArray,action.products]};
     default:
       return state
   }
