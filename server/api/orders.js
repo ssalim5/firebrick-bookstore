@@ -3,7 +3,7 @@ module.exports = router
 const { models: { Order, Book, User }} = require('../db')
 
 // GET /api/orders
-// Get all orders with the books inside each order
+// Get all orders along with the books inside each order
 router.get("/", async(req, res, next) => {
   try {
     const ordersAndBooks = await Order.findAll({include: Book})
@@ -41,6 +41,55 @@ router.get( "/:userId", async(req, res, next) => {
     }
 
     res.json(orderAndBooks)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// GET /api/orders/user=:userId/all
+router.get( "/user=:userId/all", async(req, res, next) => {
+  try {
+    const orders = User.findAll({include: Order})
+    if(!orders){
+      let error = Error("User orders not found")
+      error.status = 404
+      throw(error)
+    }
+
+    res.json(orders)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// GET /api/orders/user=:userId/order=:orderId
+// Get specific user's order and the books in it
+router.get( "/user=:userId/order=:orderId", async(req, res, next) => {
+  try {
+    const userOrder = Order.findOne({
+      where: {id: req.params.orderId},
+      include:{
+        model: User,
+        where: {id: req.params.userId}
+      }
+    })
+    if(!userOrder){
+      let error = Error("User order not found")
+      error.status = 404
+      throw(error)
+    }
+
+    const userOrderAndBooks = Order.findOne({
+      where: {id: userOrder.id},
+      include: Book
+    })
+    if(!userOrderAndBooks){
+      let error = Error("User order not found")
+      error.status = 404
+      throw(error)
+    }
+
+    res.json(userOrderAndBooks)
   } catch (error) {
     next(error)
   }

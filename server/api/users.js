@@ -12,6 +12,12 @@ router.get('/', async (req, res, next) => {
       // send everything to anyone who asks!
       attributes: ['id', 'username']
     })
+    if(!users){
+      let error = Error("Users not found")
+      error.status = 404
+      throw(error)
+    }
+
     res.json(users)
   } catch (error) {
     next(error)
@@ -28,25 +34,19 @@ router.get('/:userId', async (req, res, next) => {
       where: { id: req.params.userId },
       attributes: ['id', 'username']
     })
+    if(!user){
+      let error = Error("Users not found")
+      error.status = 404
+      throw(error)
+    }
+
     res.json(user)
   } catch (error) {
     next(error)
   }
 })
 
-// GET /api/users/orders
-router.get( '/:userId/orders', async(req, res, next) => {
-  try {
-    const userAndOrders = await User.findOne({
-      where: { id: req.params.userId },
-      attributes: ['id', 'username'],
-      include: Order
-    })
-    res.json(userAndOrders)
-  } catch (error) {
-    next(error)
-  }
-})
+
 
 // POST /api/users
 router.post("/", async(req, res, next) => {

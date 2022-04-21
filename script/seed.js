@@ -65,7 +65,7 @@ async function seed() {
       await order.addBook(randomBook, { through:
         {
           order_quantity: randQuantity,
-          subtotal_price: randomBook.price*randQuantity
+          subtotal_price: Math.round( randomBook.price*randQuantity *100)/100
         }
       })
     }
