@@ -87,7 +87,8 @@ export default function(state = initialState, action) {
       return {...state, counter : action.num};
     case ADD_ITEM:
       let newProducts;
-      console.log("running case ADD_ITEM")
+      console.log("running case ADD_ITEM");
+      console.log(action);
       if (action.products.length > 0) {
         newProducts = action.products.map(product => {
           return product;
@@ -98,6 +99,6 @@ export default function(state = initialState, action) {
     case SET_PRODUCTS:
       return [...action.products];
     default:
-      return state
+      return state;
   }
 }
