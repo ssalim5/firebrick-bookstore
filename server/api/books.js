@@ -7,6 +7,12 @@ module.exports = router
 router.get("/", async(req, res, next) => {
   try {
     const books = await Book.findAll()
+    if(!books){
+      let error = Error("Books not found")
+      error.status = 404
+      throw(error)
+    }
+
     res.json(books)
   } catch (error) {
     next(error)
@@ -17,6 +23,12 @@ router.get("/", async(req, res, next) => {
 router.get("/:bookId", async(req, res, next) => {
   try {
     const book = await Book.findByPk(req.params.bookId)
+    if(!book){
+      let error = Error("Book not found")
+      error.status = 404
+      throw(error)
+    }
+
     res.json(book)
   } catch (error) {
     next(error)
@@ -37,6 +49,12 @@ router.post("/", async(req, res, next) => {
 router.put("/:bookId", async (req, res, next) => {
   try {
     const book = await Book.findByPk(req.params.bookId)
+    if(!book){
+      let error = Error("Book not found")
+      error.status = 404
+      throw(error)
+    }
+
     res.send( await book.update(req.body) )
   } catch (error) {
     next(error)
@@ -46,7 +64,13 @@ router.put("/:bookId", async (req, res, next) => {
 // DELETE /api/books/:bookId
 router.delete("/:bookId", async(req, res, next) => {
   try {
-    const book = await Book.findByPk(req.param.bookId)
+    const book = await Book.findByPk(req.params.bookId)
+    if(!book){
+      let error = Error("Book not found")
+      error.status = 404
+      throw(error)
+    }
+
     await book.destroy()
     res.send(book)
   } catch (error) {
