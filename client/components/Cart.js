@@ -7,11 +7,6 @@ const cart = () => {
   const books = useSelector(state => state.cart);
   const user = useSelector((state) => state.auth);
 
-  // function fetchData() {
-  //   dispatch(fetchCart(1));
-  // }
-  //console.log(books)
-
   //Have to fetchCart particular number for particular ID
   useEffect( () => {
     dispatch(fetchCart(user.id));
@@ -19,7 +14,7 @@ const cart = () => {
   return (
     <a>
       <div className="cart">
-        {books.productsArray.length > 0 ? books.productsArray.map( book => {
+        {books.length > 0 ? books.map( book => {
           return (
             <div key={book.id}>
               <img src={book.cover}></img>
