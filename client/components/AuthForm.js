@@ -8,6 +8,9 @@ import {authenticate} from '../store'
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
+  // Checks to see if the current path is the signup page
+  const isSignup = props.location.pathname === '/signup'
+
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -23,6 +26,18 @@ const AuthForm = props => {
           </label>
           <input name="password" type="password" />
         </div>
+        {isSignup ?
+          <div>
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <input name="email" type="email" />
+              <label htmlFor="address">
+                <small>Address</small>
+              </label>
+              <input name="address" type="text" />
+          </div>
+          : null}
         <div>
           <button className='btn btn-primary' type="submit">{displayName}</button>
         </div>
@@ -62,7 +77,18 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const username = evt.target.username.value
       const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
+
+
+
+      if (formName === 'signup') {
+        const email = evt.target.email.value
+        const address = evt.target.address.value
+        dispatch(authenticate(username, password, formName, email, address))
+      } else {
+        dispatch(authenticate(username, password, formName))
+      }
+
+
     }
   }
 }
