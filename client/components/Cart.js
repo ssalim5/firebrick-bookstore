@@ -2,16 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchCart} from "../store/Cart";
 
-const cart = (props) => {
+const cart = () => {
   const dispatch = useDispatch();
   const books = useSelector(state => state.cart);
+  const user = useSelector((state) => state.auth);
 
   // function fetchData() {
   //   dispatch(fetchCart(1));
   // }
+  //console.log(user.id)
+
   useEffect( () => {
     //Have to fetchCart particular number for particular ID
-    dispatch(fetchCart(2));
+    dispatch(fetchCart(user.id));
   }, [dispatch])
   return (
     <a>
