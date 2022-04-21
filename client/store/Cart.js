@@ -39,7 +39,7 @@ export const fetchCart = (orderId) => {
     try {
       //make a userId route
       const {data} = await axios.get(`api/orders/${orderId}/books`);
-      dispatch(_setProducts(data));
+      dispatch(_setProducts(data.books));
     } catch (err) {
       console.log(err);
     }
@@ -64,8 +64,13 @@ export default function(state = initialState, action) {
     case SET_COUNTER:
       return {...state, counter : action.num};
     case SET_PRODUCTS:
-      console.log("Action",action)
-      return {...state,productsArray : [...state.productsArray,action.products]};
+      let newProducts;
+      if (action.products.length > 0) {
+        newProducts = action.products.map(product => {
+            return product;
+        })
+      }
+      return {...state,productsArray : [...state.productsArray, ...newProducts]};
     default:
       return state
   }
