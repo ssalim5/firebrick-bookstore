@@ -9,7 +9,7 @@ const book = ({book,counter}) => {
   return (
     <div key={book.id} className="col-lg-3 col-md-6 mb-4">
       <div className="card h-100">
-        <Link to={`/`}>
+        <Link to={'/products/' + book.id}>
           <img
             style={{ height: "320px" }}
             className="card-img-top img-fluid rounded"
