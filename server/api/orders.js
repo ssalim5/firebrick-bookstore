@@ -28,7 +28,7 @@ router.get("/:orderId", async(req, res, next) => {
 
 // GET /api/orders/:orderId/books
 // Get books inside an order
-router.get( "/:orderId/books", async(req, res, next) => {
+router.get( "/order=:orderId/books", async(req, res, next) => {
  try {
    const orderAndBooks = await Order.findOne({
      where: {id: req.params.orderId},
@@ -40,13 +40,34 @@ router.get( "/:orderId/books", async(req, res, next) => {
  }
 })
 
+// GET /api/orders/:userId/books
+// Get books in a users's unfulfilled order
+router.get( "/user=:userId/books", async(req, res, next) => {
+  try {
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCompleted: false
+      }
+    })
+    const orderId = userOrder.id
+    const orderAndBooks = await Order.findOne({
+      where: {id: orderId},
+      include: Book
+    })
+    res.json(orderAndBooks)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // POST /api/orders
 // When an item is first added to cart create an order
 router.post("/:userId", async(req, res, next) => {
   try {
     const order = await Order.create(req.body)
     const user = await User.findByPk(req.params.userId)
-    order.setUser(user)
+    await order.setUser(user)
     res.send(order)
   } catch (error) {
     next(error)
@@ -108,10 +129,10 @@ router.post("/:orderId/:bookId/:quantity", async (req, res, next) => {
 
 // DELETE /api/orders/:orderId/:bookId
 // Remove book from order
-router.delete("/:orderId", async(req, res, next) => {
+router.delete("/:orderId/:bookId", async(req, res, next) => {
   try {
-    const order = await Order.findByPk(req.param.orderId)
-    await order.destroy()
+    const order = await Order.findByPk(req.params.orderId)
+
     res.send(order)
   } catch (error) {
     next(error)
@@ -122,7 +143,7 @@ router.delete("/:orderId", async(req, res, next) => {
 // Remove an order
 router.delete("/:orderId", async(req, res, next) => {
   try {
-    const order = await Order.findByPk(req.param.orderId)
+    const order = await Order.findByPk(req.params.orderId)
     await order.destroy()
     res.send(order)
   } catch (error) {
