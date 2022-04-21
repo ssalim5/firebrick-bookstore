@@ -9,15 +9,15 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   <div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
-        <a href="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand">
           FireBrick Book Store
-        </a>
+        </Link>
         <div className="collapse navbar-collapse">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a href="/" className="nav-link active">
+            <Link to="/" className="nav-link active">
               Home
-            </a>
+            </Link>
           </li>
         </ul>
         </div>
