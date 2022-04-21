@@ -38,10 +38,12 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
               </button>
             </div>
             <Link className = "text-white me-2" to={`/userprofile/${user.id}`}>Profile</Link>
-            <button type="button" className="btn-cart btn btn-primary position-relative me-2">
-              <i className="fas fa-shopping-cart"></i>
-              <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">{cart.counter}</span>
-            </button>
+            <Link className = "cart-lnk" to="/cart">
+              <button type="button" className="btn-cart btn btn-primary position-relative me-2">
+                <i className="fas fa-shopping-cart"></i>
+                <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">{cart.counter}</span>
+              </button>
+            </Link>
             <a className= "text-white" href="#" onClick={handleClick}>
               Logout
             </a>
