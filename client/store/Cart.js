@@ -19,10 +19,11 @@ const _deleteItem = (books) => {
   }
 }
 
-const fetchCart = (userId) => {
+export const fetchCart = (orderId) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`api/carts/${userId}`);
+      //make a userId route
+      const {data} = await axios.get(`api/orders/${orderId}books`);
       dispatch(_setCart(data));
     } catch (err) {
       console.log(err);
@@ -31,7 +32,7 @@ const fetchCart = (userId) => {
 }
 
 //Check on this
-const deleteItem = (userId, bookId) => {
+export const deleteItem = (userId, bookId) => {
    return async (dispatch) => {
      try {
        //const {data} = await axios.delete(`api/carts/${userId}/${bookId});

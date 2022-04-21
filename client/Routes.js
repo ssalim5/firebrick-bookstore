@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
+import Cart from './components/Cart';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile'
 import {me} from './store'
@@ -26,6 +27,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
 
+            <Route path="/cart" component={Cart} />
             <Route  path="/userprofile" component={UserProfile}/>
           </Switch>
         ) : (

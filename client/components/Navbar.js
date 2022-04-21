@@ -36,10 +36,10 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
               </button>
             </div>
             <Link className = "text-white me-2" to="/userProfile">Profile</Link>
-            <button type="button" className="btn-cart btn btn-primary position-relative me-2">
+            <Link className = "cart-link" to="/cart"> <button type="button" className="btn-cart btn btn-primary position-relative me-2">
               <i className="fas fa-shopping-cart"></i>
               <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">0</span>
-            </button>
+            </button> </Link>
             <a className= "text-white" href="#" onClick={handleClick}>
               Logout
             </a>
