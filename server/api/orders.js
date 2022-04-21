@@ -71,20 +71,21 @@ router.put("/:orderId", async (req, res, next) => {
 
 // POST /api/orders/:orderId/:bookId
 // Add a new book to an order
-//**IN PROGRESS **
-// router.post("/:orderId/:bookId", async (req, res, next) => {
-//   try {
-//     const order = await Order.findByPk(req.params.orderId)
-//     const newBook = await Book.findByPk( req.params.bookId )
-//     order.addBook( newBook, { through:
-//       quantity: ,
-//       subtotal_price: newBook.price*quantity
-//     })
-//     res.send( newBook )
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.post("/:orderId/:bookId/:quantity", async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId)
+    const newBook = await Book.findByPk( req.params.bookId )
+    order.addBook( newBook, { through:
+      {
+        quantity: req.params.quantity,
+        subtotal_price: newBook.price*req.params.quantity
+      }
+    })
+    res.send( newBook )
+  } catch (error) {
+    next(error)
+  }
+})
 
 // PUT /api/orders/:orderId/:bookId
 // Update quantity of a book in an order
