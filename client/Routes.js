@@ -2,8 +2,10 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
+import Cart from './components/Cart';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile'
+import SingleProduct from './components/SingleProduct';
 import {me} from './store'
 import { fetchBooks } from './store/AllProducts';
 import About from './components/About';
@@ -17,7 +19,6 @@ class Routes extends Component {
   }
 
   render() {
-
     const {isLoggedIn} = this.props
 
     return (
@@ -26,8 +27,14 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
 
+
             <Route path='/about' exact component={ About } />
-            <Route  path="/userProfile/:userId" component={UserProfile}/>
+
+
+            <Route path="/cart" component={Cart} />
+            <Route path="/userProfile/:userId" component={UserProfile}/>
+            <Route path="/products/:productId" component={ SingleProduct } />
+
           </Switch>
         ) : (
           <Switch>
@@ -35,6 +42,7 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path='/about' exact component={ About } />
             <Route path="/signup" component={Signup} />
+            <Route path="/products/:productId" component={ SingleProduct } />
           </Switch>
         )}
       </div>
