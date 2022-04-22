@@ -23,7 +23,7 @@ async function seed() {
     User.create({ username: 'yeoman', password: '123', email: 'yeoman@oops.com',
     address:  '111 Coriander Ct, Scoopton, NY'}),
     User.create({ username: 'clam', password: '123', email: 'under@thesea.com',
-    address:  '92 Offal Ave, Gutrend, NY'}),
+    address:  '92 Offal Ave, Gutrend, NY',admin : true}),
   ])
 
   console.log(`seeded ${users.length} users`)
