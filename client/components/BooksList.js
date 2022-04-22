@@ -30,17 +30,7 @@ const book = ({book,counter}) => {
             }}
           >
             <a className="btn btn-info text-white" onClick={() => {
-<<<<<<< HEAD
               dispatch(addItem(user.id,book))
-              //dispatch(_setProducts([book]))
-=======
-              dispatch(_setCounter(counter + 1))
-
-            
-
-
-              dispatch(_setProducts([book]))
->>>>>>> main
             }}>Add To Cart</a>
 
             <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center">

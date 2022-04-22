@@ -2,11 +2,6 @@ import React,{useState,useEffect} from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
-<<<<<<< HEAD
-
-const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
-  //console.log(cart)
-=======
 import { useDispatch } from "react-redux";
 import { fetchBooks } from "../store/AllProducts";
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
@@ -15,7 +10,6 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   useEffect(()=>{
     dispatch(fetchBooks())
   },[input,setInput])
->>>>>>> main
   return (
   <div className="container ">
     <nav className="navbar navbar-expand-sm navbar-dark bg-primary rounded">
