@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
@@ -7,23 +7,25 @@ import { fetchBooks } from "../store/AllProducts";
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
   const [input,setInput] =useState('')
-
+  useEffect(()=>{
+    dispatch(fetchBooks())
+  },[input,setInput])
   return (
   <div className="container ">
     <nav className="navbar navbar-expand-sm navbar-dark bg-primary rounded">
       <div className="container">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand"onClick={() => setInput('')}>
           FireBrick Book Store
         </Link>
         <div className="collapse navbar-collapse">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link to="/" className="nav-link active">
+            <Link to="/" className="nav-link active" onClick={() => setInput('')}>
               Home
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/about" className="nav-link active">
+            <Link to="/" className="nav-link active">
               About
             </Link>
           </li>

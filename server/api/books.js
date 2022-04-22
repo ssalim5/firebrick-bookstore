@@ -30,6 +30,23 @@ router.get("/", async(req, res, next) => {
   }
 })
 
+router.get("/search", async(req, res, next) => {
+  try {
+
+      console.log('hereeee')
+      const books = await Book.findAll({
+        where : {title : {
+          [Op.iLike]: '%'+ req.query.keyword +'%'
+        }}
+      })
+      res.json(books)
+
+
+  } catch (error) {
+    next(error)
+  }
+})
+
 // GET /api/books/:bookId
 router.get("/:bookId", async(req, res, next) => {
   try {
