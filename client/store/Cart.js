@@ -43,11 +43,7 @@ export const _setProducts = (products) => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      //make a userId route
       const {data} = await axios.get(`api/orders/${userId}`);
-
-
-
       dispatch(_setProducts(data.books));
     } catch (err) {
       console.log(err);
@@ -80,6 +76,7 @@ export const addItem = (userId, book) => {
 
 export const setCounter = (books) => {
   return (dispatch) => {
+    console.log(books);
     let orderContents = books;
     let cartTotalItems = 0;
     for (let i = 0; i < orderContents.length; i++){
