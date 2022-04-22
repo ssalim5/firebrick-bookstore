@@ -4,7 +4,7 @@ const initialState = [];
 
 const SET_BOOKS = "SET_BOOKS";
 const ADD_BOOK = "ADD_BOOK";
-
+const SEARCH_BOOKS = 'SEARCH_BOOKS'
 const _setBooks = (books) => {
   return {
     type: SET_BOOKS,
@@ -18,6 +18,13 @@ const _addBook = (books) => {
     books
   };
 };
+
+const _searchBooks = (books) => {
+  return{
+    type:SEARCH_BOOKS,
+    books
+  }
+}
 
 export const addBook = (book, user) => {
   return async (dispatch) => {
@@ -34,17 +41,19 @@ export const addBook = (book, user) => {
   };
 };
 
-export const fetchBooks = () => {
+export const fetchBooks = (keyword) => {
   return async (dispatch) => {
     try {
       //Api link
-      const {data} = await axios.get("/api/books");
+      const {data} = await axios.get("/api/books",{params : {keyword}});
       dispatch(_setBooks(data));
     } catch (err) {
       console.log(err);
     }
   };
 };
+
+
 
 export default (state = initialState, action) => {
   switch(action.type) {

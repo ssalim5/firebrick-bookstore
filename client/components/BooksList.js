@@ -32,7 +32,9 @@ const book = ({book,counter}) => {
             <a className="btn btn-info text-white" onClick={() => {
               dispatch(_setCounter(counter + 1))
               dispatch(_setProducts(book))
-            }}>Add To Cart</a>
+            }}>Add To Cart
+            </a>
+
             <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center">
               {"$"}
               {book.price.toFixed(2)}
