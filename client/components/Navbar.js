@@ -1,23 +1,44 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+<<<<<<< HEAD
 
 const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
   //console.log(cart)
+=======
+import { useDispatch } from "react-redux";
+import { fetchBooks } from "../store/AllProducts";
+const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
+  const dispatch = useDispatch()
+  const [input,setInput] =useState('')
+  useEffect(()=>{
+    dispatch(fetchBooks())
+  },[input,setInput])
+>>>>>>> main
   return (
-  <div className="container">
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div className="container ">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-primary rounded">
       <div className="container">
-        <a href="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand"onClick={() => setInput('')}>
           FireBrick Book Store
-        </a>
+        </Link>
         <div className="collapse navbar-collapse">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a href="/" className="nav-link active">
+            <Link to="/" className="nav-link active" onClick={() => setInput('')}>
               Home
-            </a>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/" className="nav-link active">
+              About
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/" className="nav-link active">
+              Contact
+            </Link>
           </li>
         </ul>
         </div>
@@ -25,15 +46,21 @@ const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
         {isLoggedIn ? (
           <div className="shopping-cart d-flex align-items-center position-relative">
             {/* The navbar will show these links after you log in */}
-            <div className="me-3">
-              <label htmlFor="search"></label>
+            <div className="me-3 d-flex flex-row">
+              <label id='search-text' htmlFor="search"></label>
               <input
+
                 className="me-2"
                 name="search"
+                value={input.name}
+                onChange = {(e)=> setInput(e.target.value)}
                 type="text"
                 placeholder="type for search"
               />
-              <button type="button" className="btn-cart btn btn-primary ">
+              <button type="button" className="btn-cart btn btn-primary" onClick={(e) => {
+                e.preventDefault()
+                dispatch(fetchBooks(input))
+              }}>
               <i className="fa-solid fa-magnifying-glass"></i>
               </button>
             </div>

@@ -8,7 +8,7 @@ import UserProfile from './components/UserProfile'
 import SingleProduct from './components/SingleProduct';
 import {me} from './store'
 import { fetchBooks } from './store/AllProducts';
-
+import About from './components/About';
 /**
  * COMPONENT
  */
@@ -26,14 +26,21 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
+
+
+            <Route path='/about' exact component={ About } />
+            
+
             <Route path="/cart" component={Cart} />
             <Route path="/userProfile/:userId" component={UserProfile}/>
             <Route path="/products/:productId" component={ SingleProduct } />
+
           </Switch>
         ) : (
           <Switch>
             <Route path='/' exact component={ Home } />
             <Route path="/login" component={Login} />
+            <Route path='/about' exact component={ About } />
             <Route path="/signup" component={Signup} />
             <Route path="/products/:productId" component={ SingleProduct } />
           </Switch>
