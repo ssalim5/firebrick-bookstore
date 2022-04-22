@@ -23,7 +23,7 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/" className="nav-link active">
+            <Link to="/about" className="nav-link active">
               About
             </Link>
           </li>

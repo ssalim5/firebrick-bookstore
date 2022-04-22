@@ -6,7 +6,7 @@ import Home from './components/Home';
 import UserProfile from './components/UserProfile'
 import {me} from './store'
 import { fetchBooks } from './store/AllProducts';
-
+import About from './components/About';
 /**
  * COMPONENT
  */
@@ -25,7 +25,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
-
+            <Route path='/about' exact component={ About } />
             <Route  path="/userProfile/:userId" component={UserProfile}/>
           </Switch>
         ) : (

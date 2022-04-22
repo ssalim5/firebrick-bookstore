@@ -56,5 +56,8 @@ form{
 .card-body h5 {
   font-family: 'Raleway', sans-serif;
   text-decoration: underline;
+}
 
+.about{
+  font-family: 'Raleway', sans-serif;
 }
