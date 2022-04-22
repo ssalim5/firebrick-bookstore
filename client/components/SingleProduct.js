@@ -21,10 +21,6 @@ export const SingleProduct = () => {
     dispatch(fetchBook(productId))
   }, [dispatch]);
 
-
-  console.log("Reaching component.")
-  console.log(typeof book.price);
-
   return (
     <div className='d-flex vh-100 m-5'>
       <div className='bg-success w-25' >

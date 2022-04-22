@@ -1,6 +1,6 @@
 const router = require('express').Router()
 module.exports = router
-const { models: { Order, Book, User }} = require('../db')
+const { models: { Order, Order_Products, Book, User }} = require('../db')
 
 // GET /api/orders
 // Get all orders along with the books inside each order
@@ -168,7 +168,17 @@ router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, ne
         subtotal_price: newBook.price*req.params.quantity
       }
     })
-    res.send(newBook)
+
+    const orderUpdate = await Order.findOne({
+      where: {
+       userId: req.params.userId,
+      },
+      include:{
+       model: Book,
+       where: {id: req.params.bookId}
+     }
+    })
+    res.send(orderUpdate.books[0])
   } catch (error) {
     next(error)
   }

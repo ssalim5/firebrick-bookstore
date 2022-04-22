@@ -2,10 +2,11 @@ import React,{useState,useEffect} from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import { fetchBooks } from "../store/AllProducts";
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
+  const cartCounter = useSelector((state) => state.cart);
   const [input,setInput] =useState('')
   useEffect(()=>{
     dispatch(fetchBooks())
@@ -62,7 +63,7 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
             <Link className = "cart-lnk" to="/cart">
               <button type="button" className="btn-cart btn btn-primary position-relative me-2">
                 <i className="fas fa-shopping-cart"></i>
-                <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">{cart.counter}</span>
+                <span id="item-count" className="position-absolute top-5 start-98 translate-middle badge rounded-pill bg-danger mt-2 ">{cartCounter.counter}</span>
               </button>
             </Link>
             <a className= "text-white" href="#" onClick={handleClick}>

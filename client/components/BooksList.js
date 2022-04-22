@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { _setCounter,_setProducts } from "../store/Cart";
+import { useDispatch ,useSelector} from "react-redux";
+import { addItem, setCounter, _setCounter,_setProducts } from "../store/Cart";
 const book = ({book,counter}) => {
-
+  const user = useSelector((state) => state.auth);
+  const books = useSelector((state) => state.cart);
   const dispatch = useDispatch()
 
   return (
@@ -30,12 +31,8 @@ const book = ({book,counter}) => {
             }}
           >
             <a className="btn btn-info text-white" onClick={() => {
-              dispatch(_setCounter(counter + 1))
-
-            
-
-
-              dispatch(_setProducts([book]))
+              dispatch(addItem(user.id,book,1))
+              dispatch(setCounter(books))
             }}>Add To Cart</a>
 
             <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center">
