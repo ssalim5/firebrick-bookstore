@@ -4,7 +4,7 @@ const initialState = [];
 
 const SET_BOOKS = "SET_BOOKS";
 const ADD_BOOK = "ADD_BOOK";
-const SEARCH_BOOKS = 'SEARCH_BOOKS'
+
 const _setBooks = (books) => {
   return {
     type: SET_BOOKS,
@@ -19,12 +19,7 @@ const _addBook = (books) => {
   };
 };
 
-const _searchBooks = (books) => {
-  return{
-    type:SEARCH_BOOKS,
-    books
-  }
-}
+
 
 export const addBook = (book, user) => {
   return async (dispatch) => {
