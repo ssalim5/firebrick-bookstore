@@ -45,7 +45,7 @@ export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
       //make a userId route
-      const {data} = await axios.get(`api/orders/${userId}/books`);
+      const {data} = await axios.get(`api/orders/${userId}`);
       console.log(data);
       dispatch(_setProducts(data.books));
     } catch (err) {
