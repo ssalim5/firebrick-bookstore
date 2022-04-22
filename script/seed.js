@@ -26,57 +26,51 @@ async function seed() {
     address:  '92 Offal Ave, Gutrend, NY'}),
   ])
 
-  console.log(`seeded ${users.length} users`)
+  console.log(users.length, "users seeded.")
 
   // Creating books
   let booksSeeded = []
   for (let i = 0; i < booksToSeed.books.length; i++){
-    console.log(booksToSeed.books[i])
     const seededbook = await Book.create(booksToSeed.books[i]);
     booksSeeded.push(seededbook);
   }
 
   console.log(booksSeeded.length, 'books seeded.')
 
-  let orders = []
   // Creating Orders...
+  let orders = []
   for(let i = 0; i < users.length; i++){
     const order = await Order.create()
     orders.push(order)
-    await order.setUser( users[i] )
+    await order.setUser(await User.findByPk(i+1))
   }
+
+  console.log(orders.length, 'orders seeded.')
+
 
   //Filling Orders
   let orderMin = 2;
   let orderMax = 12;
-
-  let bookList = booksSeeded;
-  let bookListLength = bookList.length;
+  let booksSeededLength = booksSeeded.length;
 
   for (let i = 0; i < orders.length; i++){
-    let orderSize = Math.floor(Math.random() * orderMax + orderMin)
+    let orderSize = Math.floor(Math.random() * (orderMax-orderMin) + orderMin)
 
     let j = 0;
     const order = orders[i]
     while (j < orderSize) {
       j++;
-      const randomBook = bookList[ Math.floor(Math.random() * bookListLength) ]
-      const randQuantity = Math.floor( Math.random()*randomBook.quantity )
-      await randomBook.addOrder(order, { through:
+      const randomBook = booksSeeded[ Math.floor(Math.random() * booksSeededLength) ]
+      const randQuantity = Math.floor( Math.random()*(randomBook.stock-1) + 1 )
+      await order.addBook(randomBook, { through:
         {
-          quantity: randQuantity,
-          subtotal_price: randomBook.price*randQuantity
+          order_quantity: randQuantity,
+          subtotal_price: Math.round( randomBook.price*randQuantity *100)/100
         }
       })
     }
   }
   console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
 }
 
 /*
