@@ -14,10 +14,11 @@ const cart = () => {
   return (
     <a>
       <div className="cart">
-        {books.length > 0 ? books.map( book => {
+        {books.productsArray.length > 0 ? books.productsArray.map( book => {
           return (
             <div key={book.id}>
               <img src={book.cover}></img>
+              <h1>{book.order_products.order_quantity} </h1>
               <button> Delete </button>
             </div>
           );

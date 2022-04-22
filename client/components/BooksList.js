@@ -31,7 +31,7 @@ const book = ({book,counter}) => {
             }}
           >
             <a className="btn btn-info text-white" onClick={() => {
-              dispatch(addItem(user.id,book))
+              dispatch(addItem(user.id,book,1))
               dispatch(setCounter(books))
             }}>Add To Cart</a>
 

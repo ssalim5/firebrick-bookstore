@@ -63,10 +63,12 @@ export const deleteItem = (userId, bookId) => {
    }
 }
 
-export const addItem = (userId, book) => {
+export const addItem = (userId,book,quantity) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.post(`api/orders/${userId}`, book);
+      const {data} = await axios.post(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
+      console.log('Api response');
+      console.log(data);
       dispatch(_addItem(data));
     } catch (err){
       console.log(err);
@@ -86,24 +88,24 @@ export const setCounter = (books) => {
   }
 }
 
+//Revisit Later when dealing with localstorage and logging in
+// let newProducts = [];
+// if (action.products.isAr || action.products.length > 0) {
+//   newProducts = action.products.map(product => {
+//     return product;
+//   })
+// }
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_COUNTER:
       return {...state, counter : action.num};
     case ADD_ITEM:
-      let newProducts;
-      console.log("running case ADD_ITEM");
+      console.log("Add_ITEM")
       console.log(action);
-      if (action.products.length > 0) {
-        newProducts = action.products.map(product => {
-          return product;
-        })
-      }
-      console.log(newProducts)
-      return {...state,productsArray : [...state.productsArray,...newProducts]};
+      return {...state, productsArray : [...state.productsArray,action.products]};
     case SET_PRODUCTS:
-      return [...action.products];
+      return {...state, productsArray: [...action.products]}
     default:
       return state;
   }
