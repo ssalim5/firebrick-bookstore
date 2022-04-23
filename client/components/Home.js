@@ -10,17 +10,25 @@ import { _setCounter } from "../store/Cart";
  */
 export const Home = () => {
   const books = useSelector((state) => state.allProducts);
+
   const cart = useSelector((state) => state.cart);
   const {admin} = useSelector((state) => state.auth)
 
   ///For pagination ////
   const [currentPage,setCurrentPage] = useState(1);
   const [productsPerPage,setProductsPerPage] = useState(12)
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = books.slice(indexOfFirstProduct,indexOfLastProduct);
   const totalPagesSum = Math.ceil(books.length / productsPerPage);
+  const numOfPages = [];
+  for(let i = 1; i<=totalPagesSum; i++){
+    numOfPages.push(i)
+  }
   ///For pagination ////
+  ///////////////////
+  const booksHeaders = ['id','author','title','price']
   return (
 
     <div>
@@ -28,59 +36,64 @@ export const Home = () => {
     {admin ?
     <div className="container d-flex flex-row justify-content-between vh-100">
       <div className="bg-white w-25 mt-5 aling-items-center">
-      <div class="form-check mt-3 ms-2 p-2">
-        <input class="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-        <label class="form-check-label" for="flexRadioDefault1">
+      <div className="form-check mt-3 ms-2 p-2">
+        <input className="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+        <label className="form-check-label" htmlFor="flexRadioDefault1">
           Orders
         </label>
       </div>
 
-      <div class="form-check mt-3 ms-2 p-2">
-        <input class="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-        <label class="form-check-label" for="flexRadioDefault1">
+      <div className="form-check mt-3 ms-2 p-2">
+        <input className="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+        <label className="form-check-label" htmlFor="flexRadioDefault1">
           Products
         </label>
       </div>
 
-      <div class="form-check mt-3 ms-2 p-2">
-        <input class="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-        <label class="form-check-label" for="flexRadioDefault1">
+      <div className="form-check mt-3 ms-2 p-2">
+        <input className="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+        <label className="form-check-label" htmlFor="flexRadioDefault1">
           Users
         </label>
       </div>
       </div>
 
-      <div className="bg-danger w-75">
+      <div className=" w-75">
 
         <Table striped bordered hover className="me-2 ms-2">
         <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            {booksHeaders.map((elem,index) => {
+              return(
+                <th key={index}>{elem}</th>
+              )
+            })}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {currentProducts.map((book,index) => {
+
+            return(
+            <tr key={index}>
+              <td>{book.id}</td>
+              <td>{book.author}</td>
+              <td>{book.title}</td>
+              <td>{book.price}</td>
+            </tr>
+            )
+          })}
+
         </tbody>
         </Table>
+        <nav className="d-flex justify-content-center">
+          <ul className="pagination">
+            {numOfPages.map((el,index) =>{
+              return(
+                <li key={el} className="page-link" onClick={() => setCurrentPage(el)}>{el}</li>
+              )
+            })}
+          </ul>
+        </nav>
      </div>
     </div>
 
