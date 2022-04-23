@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { useDispatch } from "react-redux";
 import { fetchBooks } from "../store/AllProducts";
+import { getUserThunk } from "../store/Users";
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
   const [input,setInput] =useState('')
   useEffect(()=>{
     dispatch(fetchBooks())
+    dispatch(getUserThunk())
   },[input,setInput])
   return (
   <div className="container ">

@@ -1,16 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {useState,useEffect} from 'react'
-import { Table } from "react-bootstrap";
+
 import BooksList from "./BooksList";
 import Pagination from "./Pagination";
 import { _setCounter } from "../store/Cart";
+import Users from "./adminPageTables/Users";
+import Books from "./adminPageTables/Books";
 /**
  * COMPONENT
  */
 export const Home = () => {
   const books = useSelector((state) => state.allProducts);
-
+  const users = useSelector((state) => state.users);
   const cart = useSelector((state) => state.cart);
   const {admin} = useSelector((state) => state.auth)
 
@@ -20,15 +22,58 @@ export const Home = () => {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = books.slice(indexOfFirstProduct,indexOfLastProduct);
+
+
+
+
+  ///For pagination ////
+  ///////////////////
+  const classes = ['books','users', 'orders']
+  const [checkedState, setCheckedState] = useState(
+    new Array(classes.length).fill(false)
+  );
+  const [currentState,setCurrentState] = useState(classes[0])
+
+
+
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : false
+    );
+
+    setCheckedState(updatedCheckedState);
+
+    const resultIndex = updatedCheckedState.filter(
+      (elem, index) => {
+        if (elem === true) {
+          setCurrentState(classes[index]);
+          return index;
+        }
+      });
+    };
+  let showArray;
+  if(currentState === 'books'){
+    showArray= books;
+  }else if (currentState === 'users'){
+    showArray= users; // later make users
+  }else{
+    showArray= []; // later make orders
+  }
+
+
+  const currentProducts = showArray.slice(indexOfFirstProduct,indexOfLastProduct);
   const totalPagesSum = Math.ceil(books.length / productsPerPage);
   const numOfPages = [];
   for(let i = 1; i<=totalPagesSum; i++){
     numOfPages.push(i)
   }
-  ///For pagination ////
-  ///////////////////
-  const booksHeaders = ['id','author','title','price']
+
+
+
+
+
+
   return (
 
     <div>
@@ -36,60 +81,30 @@ export const Home = () => {
     {admin ?
     <div className="container d-flex flex-row justify-content-between vh-100">
       <div className="bg-white w-25 mt-5 aling-items-center">
-      <div className="form-check mt-3 ms-2 p-2">
-        <input className="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          Orders
-        </label>
+      {classes.map((name,index)=>{
+        return (
+          <div key={index} className="form-check mt-3 ms-2 p-2">
+            <input className="form-check-input ms-2" type="radio" name={name} id={`custom-checkbox-${index}`} value={name}
+            checked={checkedState[index]}
+            onChange={() => handleOnChange(index)}/>
+            <label className="form-check-label" htmlFor="flexRadioDefault1">
+            {name}
+            </label>
       </div>
-
-      <div className="form-check mt-3 ms-2 p-2">
-        <input className="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          Products
-        </label>
-      </div>
-
-      <div className="form-check mt-3 ms-2 p-2">
-        <input className="form-check-input ms-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          Users
-        </label>
-      </div>
+        )
+      })}
       </div>
 
       <div className=" w-75">
 
-        <Table striped bordered hover className="me-2 ms-2">
-        <thead>
-          <tr>
-            {booksHeaders.map((elem,index) => {
-              return(
-                <th key={index}>{elem}</th>
-              )
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {currentProducts.map((book,index) => {
+      {currentState === 'books' ? <Books currentProducts={currentProducts}/> : currentState ==='users' ? <Users currentProducts={currentProducts}/> : <Users currentProducts={currentProducts}/> }
 
-            return(
-            <tr key={index}>
-              <td>{book.id}</td>
-              <td>{book.author}</td>
-              <td>{book.title}</td>
-              <td>{book.price}</td>
-            </tr>
-            )
-          })}
-
-        </tbody>
-        </Table>
         <nav className="d-flex justify-content-center">
           <ul className="pagination">
             {numOfPages.map((el,index) =>{
+              //console.log(el,currentPage)
               return(
-                <li key={el} className="page-link" onClick={() => setCurrentPage(el)}>{el}</li>
+                <li key={el} className={el === currentPage ? 'page-item active' : 'page-item' } onClick={() => setCurrentPage(el)}><p className="page-link">{el}</p></li>
               )
             })}
           </ul>
