@@ -1,9 +1,11 @@
 import axios from "axios";
+//import { DELETE } from "sequelize/types/query-types";
 
 const initialState = [];
 
 const SET_BOOKS = "SET_BOOKS";
 const ADD_BOOK = "ADD_BOOK";
+const DELETE_BOOK = 'DELETE_BOOK';
 
 const _setBooks = (books) => {
   return {
@@ -16,6 +18,13 @@ const _addBook = (books) => {
   return {
     type: ADD_BOOK,
     books
+  };
+};
+
+const _deleteBook = (id) => {
+  return {
+    type: DELETE_BOOK,
+    id
   };
 };
 
@@ -49,6 +58,21 @@ export const fetchBooks = (keyword) => {
 };
 
 
+export const deleteBook = (bookId) => {
+  return async (dispatch) => {
+
+      try {
+        console.log('asdfsadfsad',bookId)
+        const {data} =  await axios.delete(`/api/books/${bookId}`);
+        dispatch(_deleteBook(data.id));
+      } catch (err){
+        console.log(err);
+      }
+    }
+
+};
+
+
 
 export default (state = initialState, action) => {
   switch(action.type) {
@@ -59,7 +83,12 @@ export default (state = initialState, action) => {
         return element;
       });
       return [...books];
+
     }
+    case DELETE_BOOK:
+
+      return state.filter((book) => book.id != action.id)
+
     default:
       return state;
   }

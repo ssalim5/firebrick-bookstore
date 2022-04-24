@@ -3,7 +3,7 @@ import axios from "axios";
 const initialState = {};
 
 const SET_BOOK = "SET_BOOK";
-const DELETE_BOOK = "DELETE_BOOK";
+
 
 const _setBook = (book) => {
   return {
@@ -12,12 +12,6 @@ const _setBook = (book) => {
   };
 };
 
-const _deleteBook = (book) => {
-  return {
-    type: DELETE_BOOK,
-    book
-  };
-};
 
 export const fetchBook = (bookId) => {
   return async (dispatch) => {
@@ -30,28 +24,26 @@ export const fetchBook = (bookId) => {
     }
   };
 };
-
-export const deleteBook = (bookId, user) => {
-  return async (dispatch) => {
-    if(user.admin) {
-      try {
-        const {data} = await axios.delete(`/api/books/${bookId}`);
-        dispatch(_deleteBook(data));
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      //Nothing --> Page that denies
-    }
-  };
-};
+//this delete thunk added allProducts.js
+// export const deleteBook = (bookId, user) => {
+//   return async (dispatch) => {
+//     if(user.admin) {
+//       try {
+//         const {data} = await axios.delete(`/api/books/${bookId}`);
+//         dispatch(_deleteBook(data));
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     } else {
+//       //Nothing --> Page that denies
+//     }
+//   };
+// };
 
 export default (state = initialState, action) => {
   switch(action.type) {
     case SET_BOOK:
       return {...action.book};
-    case DELETE_BOOK:
-      return state.filter( element => element.id !== action.campus.id);
     default:
       return state;
   }

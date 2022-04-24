@@ -8,13 +8,13 @@ const TOKEN = 'token'
  */
 const SET_AUTH = 'SET_AUTH'
 const UPDATE_USER = 'UPDATE_USER';
-const GET_USERS = 'GET_USERS'
+
 /**
  * ACTION CREATORS
  */
 const setAuth = auth => ({type: SET_AUTH, auth})
 const updateUser = user => ({type : UPDATE_USER,user})
-const getUsers = user =>({type : GET_USERS,user})
+
 /**
  * THUNK CREATORS
  */
@@ -45,17 +45,7 @@ export const updateUserThunk = (user) => async dispatch => {
   }
 }
 
-export const getUserThunk = () => async dispatch => {
-  try{
 
-    const { data: taken } = await axios.put(`/api/users/`);
-
-    return dispatch(getUsers(taken))
-
-  }catch(err){
-    console.log(err)
-  }
-}
 
 
 export const authenticate = (username, password, method, email, address) => async dispatch => {
