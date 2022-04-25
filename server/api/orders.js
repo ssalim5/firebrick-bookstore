@@ -47,15 +47,20 @@ router.get( "/:userId", async(req, res, next) => {
 })
 
 // GET /api/orders/user=:userId/all
-router.get( "/user=:userId/all", async(req, res, next) => {
+// Get a user's completed orders
+router.get( "/:userId/all", async(req, res, next) => {
   try {
-    const orders = User.findAll({include: Order})
+    const orders = User.findAll({
+      include: {
+        model: Order,
+        where: { isCompleted: true }
+      }
+    })
     if(!orders){
       let error = Error("User orders not found")
       error.status = 404
       throw(error)
     }
-
     res.json(orders)
   } catch (error) {
     next(error)
@@ -96,7 +101,7 @@ router.get( "/user=:userId/order=:orderId", async(req, res, next) => {
 })
 
 // POST /api/orders
-// When an item is first added to cart create an order
+// When an item is first added to cart create an unfulfilled order
 router.post("/:userId", async(req, res, next) => {
   try {
     const order = await Order.create(req.body)
@@ -139,7 +144,7 @@ router.put("/:userId", async (req, res, next) => {
   }
 })
 
-// POST /api/orders/:userId/:bookId/:quantity
+// POST /api/orders/user=:userId/book=:bookId/quantity=:quantity
 // Add a new book to an order
 router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, next) => {
   try {
@@ -149,6 +154,7 @@ router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, ne
         isCompleted: false
       }
     })
+
     if( !userOrder ){
       let error = Error('User order not found')
       error.status = 404
@@ -184,9 +190,9 @@ router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, ne
   }
 })
 
-// PUT /api/orders/:orderId/:bookId
+// PUT /api/orders/user=:userId/book=:bookId/quantity=:quantity
 // Update quantity of a book in an order
-router.put( "/user=:userId/book=:bookId", async(req, res, next) => {
+router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, next) => {
   try {
     const userOrder = await Order.findOne({
       where: {
@@ -219,8 +225,8 @@ router.put( "/user=:userId/book=:bookId", async(req, res, next) => {
     await userOrder.removeBook(book)
     const newBook = await userOrder.addBook(book, {through:
       {
-        order_quantity: old_quantity+1,
-        subtotal_price: oldBook.price*(old_quantity+1)
+        order_quantity: old_quantity+req.params.quantity,
+        subtotal_price: oldBook.price*(old_quantity+req.params.quantity)
       }
     })
     res.json(newBook)
@@ -229,7 +235,7 @@ router.put( "/user=:userId/book=:bookId", async(req, res, next) => {
   }
 })
 
-// DELETE /api/orders/:orderId/:bookId
+// DELETE /api/orders/user=:userId/book=:bookId
 // Remove book from order
 router.delete("/user=:userId/book=:bookId", async(req, res, next) => {
   try {
