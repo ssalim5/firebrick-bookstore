@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch ,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem, setCounter } from "../store/Cart";
-const book = ({book,counter}) => {
+const book = ({book, counter}) => {
   const user = useSelector((state) => state.auth);
   const books = useSelector((state) => state.cart);
   const dispatch = useDispatch()
+  // dispatch(setCounter(books.productsArray))
 
   return (
     <div key={book.id} className="col-lg-3 col-md-6 mb-4">
@@ -32,7 +33,7 @@ const book = ({book,counter}) => {
           >
             <a className="btn btn-info text-white" onClick={async () => {
               await dispatch(addItem(user.id,book,1))
-              dispatch(setCounter(books.productsArray))
+              dispatch(setCounter())
             }}>Add To Cart</a>
 
             <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center">
