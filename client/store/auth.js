@@ -38,7 +38,7 @@ export const updateUserThunk = (user) => async dispatch => {
     console.log(user)
     const { data: updated } = await axios.put(`/api/users/userprofile/${user.id}`, user)
     history.push(`/userprofile/${user.id}`)
-    return dispatch(updateUser(updated))
+    dispatch(updateUser(updated))
 
   }catch(err){
     console.log(err)
