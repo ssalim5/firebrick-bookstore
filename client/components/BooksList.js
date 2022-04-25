@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch ,useSelector} from "react-redux";
-import { addItem, setCounter, _setCounter,_setProducts } from "../store/Cart";
+import { addItem, setCounter } from "../store/Cart";
 const book = ({book,counter}) => {
   const user = useSelector((state) => state.auth);
   const books = useSelector((state) => state.cart);
@@ -30,9 +30,9 @@ const book = ({book,counter}) => {
               justifyContent: "space-between",
             }}
           >
-            <a className="btn btn-info text-white" onClick={() => {
-              dispatch(addItem(user.id,book,1))
-              dispatch(setCounter(books))
+            <a className="btn btn-info text-white" onClick={async () => {
+              await dispatch(addItem(user.id,book,1))
+              dispatch(setCounter(books.productsArray))
             }}>Add To Cart</a>
 
             <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center">

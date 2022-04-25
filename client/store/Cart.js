@@ -67,6 +67,8 @@ export const addItem = (userId,book,quantity) => {
   return async (dispatch) => {
     try {
       const {data} = await axios.post(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
+      console.log('Api response');
+      console.log(data);
       dispatch(_addItem(data));
     } catch (err){
       console.log(err);
@@ -74,14 +76,9 @@ export const addItem = (userId,book,quantity) => {
   }
 }
 
-export const setCounter = (books) => {
+export const setCounter = () => {
   return (dispatch) => {
-    let orderContents = books;
-    let cartTotalItems = 0;
-    for (let i = 0; i < orderContents.length; i++){
-      cartTotalItems+= orderContents[i].order_products.order_quantity;
-    }
-    dispatch(_setCounter(cartTotalItems));
+    dispatch(_setCounter());
   }
 }
 
@@ -96,8 +93,15 @@ export const setCounter = (books) => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_COUNTER:
-      return {...state, counter : action.num};
+      let orderContents = state.productsArray;
+      let cartTotalItems = 0;
+      for (let i = 0; i < orderContents.length; i++){
+        cartTotalItems+= orderContents[i].order_products.order_quantity;
+      }
+      return {...state, counter : cartTotalItems};
     case ADD_ITEM:
+      console.log("Add_ITEM")
+      console.log(action);
       return {...state, productsArray : [...state.productsArray,action.products]};
     case SET_PRODUCTS:
       return {...state, productsArray: [...action.products]}
