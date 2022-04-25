@@ -40,12 +40,6 @@ const Books = ({currentProducts}) => {
     </Table>
     </>
   )
-
-
-
-
 };
-
-
 
 export default Books;
