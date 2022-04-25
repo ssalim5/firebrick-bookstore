@@ -7,7 +7,6 @@ const Op = Sequelize.Op;
 // GET /api/books
 router.get("/", async(req, res, next) => {
   try {
-
     function isEmpty(obj) {
       return Object.keys(obj).length === 0;
     }
@@ -68,7 +67,6 @@ router.put("/:bookId", async (req, res, next) => {
       error.status = 404
       throw(error)
     }
-
     res.send( await book.update(req.body) )
   } catch (error) {
     next(error)
@@ -84,7 +82,6 @@ router.delete("/:bookId", async(req, res, next) => {
       error.status = 404
       throw(error)
     }
-
     await book.destroy()
     res.send(book)
   } catch (error) {

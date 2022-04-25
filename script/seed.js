@@ -23,7 +23,7 @@ async function seed() {
     User.create({ username: 'yeoman', password: '123', email: 'yeoman@oops.com',
     address:  '111 Coriander Ct, Scoopton, NY'}),
     User.create({ username: 'clam', password: '123', email: 'under@thesea.com',
-    address:  '92 Offal Ave, Gutrend, NY'}),
+    address:  '92 Offal Ave, Gutrend, NY',admin : true}),
   ])
 
   console.log(users.length, "users seeded.")
@@ -41,12 +41,14 @@ async function seed() {
   let orders = []
   for(let i = 0; i < users.length; i++){
     const order = await Order.create()
+    const completedOrder = await Order.create( {isCompleted: true} )
     orders.push(order)
-    await order.setUser(await User.findByPk(i+1))
+    orders.push(completedOrder)
+    await order.setUser( await User.findByPk(i+1) )
+    await completedOrder.setUser( await User.findByPk(i+1) )
   }
 
   console.log(orders.length, 'orders seeded.')
-
 
   //Filling Orders
   let orderMin = 2;
