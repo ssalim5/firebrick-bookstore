@@ -10,7 +10,10 @@ import { setCounter, fetchCart } from "../store/Cart";
 import { getUserThunk } from "../store/Users";
 import { fetchOrders } from "../store/Orders";
 
-const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
+const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
+
+  console.log("This is the cart", cart)
+
   const dispatch = useDispatch()
 
   const cartCounter = useSelector((state) => state.cart);
@@ -23,9 +26,7 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   },[input,setInput])
 
   useEffect(() => {
-
     async function getCart() {
-
       await dispatch(fetchCart(user.id))
       await dispatch(setCounter());
     }
@@ -34,9 +35,13 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
 
     }, [isLoggedIn])
 
+  useEffect(() => {
+
+  }, [cart])
 
 
     // Guest returns after closing session, cart is filled based on local.storage
+
 
     // User is logged in, cart is filled based on API call to database
 

@@ -46,6 +46,16 @@ export const fetchCart = (userId) => {
       if(userId){
         const {data} = await axios.get(`api/orders/${userId}`);
         dispatch(_setProducts(data.books));
+      } else {
+        try {
+          console.log("reading local storage")
+          const data = JSON.parse(localStorage.getItem('guestData'));
+          console.log("Local data is:", data)
+          dispatch(_setProducts(data.books));
+        }
+        catch{
+          // If this is the first visit for a guest, nothing should happen
+        }
       }
     } catch (err) {
       console.log(err);
@@ -55,7 +65,7 @@ export const fetchCart = (userId) => {
 
 //Check on this
 export const deleteItem = (userId, bookId) => {
-   return async (dispatch) => {
+  return async (dispatch) => {
      try {
        const {data} = await axios.delete(`api/orders/user=${userId}/book=${bookId}`);
        dispatch(_deleteItem(data));
@@ -67,11 +77,18 @@ export const deleteItem = (userId, bookId) => {
 
 export const addItem = (userId,book,quantity) => {
   return async (dispatch) => {
-    try {
-      const {data} = await axios.post(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
-      dispatch(_addItem(data));
-    } catch (err){
-      console.log(err);
+    if (userId){
+      try {
+        const {data} = await axios.post(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
+        dispatch(_addItem(data));
+        console.log("Add item data is:", data)
+      } catch (err){
+        console.log(err);
+      }
+    } else {
+      const {data} = await axios.get(`/api/books/${book.id}`);
+
+      console.log("Unlogged add item data is:", data)
     }
   }
 }

@@ -6,10 +6,12 @@ const Op = Sequelize.Op;
 
 // GET /api/books
 router.get("/", async(req, res, next) => {
+
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+
   try {
-    function isEmpty(obj) {
-      return Object.keys(obj).length === 0;
-    }
 
     if(isEmpty(req.query)){
 
@@ -19,7 +21,7 @@ router.get("/", async(req, res, next) => {
         ]
       })
       res.json(books)
-    }else{
+    } else {
 
       const books = await Book.findAll({
         where : {title : {
