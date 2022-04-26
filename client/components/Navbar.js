@@ -7,7 +7,6 @@ import { fetchBooks } from "../store/AllProducts";
 import { getUserThunk } from "../store/Users";
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
-  console.log(user)
   const cartCounter = useSelector((state) => state.cart);
   const [input,setInput] =useState('')
   useEffect(()=>{
