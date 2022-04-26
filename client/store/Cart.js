@@ -45,11 +45,8 @@ export const fetchCart = (userId) => {
     try {
       if(userId){
         const {data} = await axios.get(`api/orders/${userId}`);
-
         dispatch(_setProducts(data.books));
-
       }
-
     } catch (err) {
       console.log(err);
     }
@@ -60,8 +57,8 @@ export const fetchCart = (userId) => {
 export const deleteItem = (userId, bookId) => {
    return async (dispatch) => {
      try {
-       //const {data} = await axios.delete(`api/carts/${userId}/${bookId});
-       //dispatch(_deleteItem(data));
+       const {data} = await axios.delete(`api/orders/user=${userId}/book=${bookId}`);
+       dispatch(_deleteItem(data));
      } catch (err) {
        console.log(err);
      }
@@ -72,8 +69,6 @@ export const addItem = (userId,book,quantity) => {
   return async (dispatch) => {
     try {
       const {data} = await axios.post(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
-      console.log('Api response');
-      console.log(data);
       dispatch(_addItem(data));
     } catch (err){
       console.log(err);
@@ -87,14 +82,6 @@ export const setCounter = () => {
   }
 }
 
-//Revisit Later when dealing with localstorage and logging in
-// let newProducts = [];
-// if (action.products.isAr || action.products.length > 0) {
-//   newProducts = action.products.map(product => {
-//     return product;
-//   })
-// }
-
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_COUNTER:
@@ -105,11 +92,12 @@ export default function(state = initialState, action) {
       }
       return {...state, counter : cartTotalItems};
     case ADD_ITEM:
-      console.log("Add_ITEM")
-      console.log(action);
       return {...state, productsArray : [...state.productsArray,action.products]};
     case SET_PRODUCTS:
-      return {...state, productsArray: [...action.products]}
+      return {...state, productsArray: [...action.products]};
+    case DELETE_ITEM:
+      const filteredState = state.productsArray.filter( element => element.id !== action.books.id);
+      return {...state, productsArray: [...filteredState]};
     default:
       return state;
   }

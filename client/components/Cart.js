@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchCart} from "../store/Cart";
+import {fetchCart , deleteItem, setCounter} from "../store/Cart";
 import { Link } from "react-router-dom";
 
 
@@ -14,14 +14,17 @@ const cart = () => {
     dispatch(fetchCart(user.id));
   }, [dispatch])
   return (
-    <a>
+    <div>
       <div className="cart">
         {books.productsArray.length > 0 ? books.productsArray.map( book => {
           return (
             <div key={book.id}>
               <img src={book.cover}></img>
               <h1>{book.order_products.order_quantity} </h1>
-              <button> Delete </button>
+              <button onClick={async () => {
+                await dispatch(deleteItem(user.id, book.id));
+                dispatch(setCounter());
+              }}> Delete </button>
             </div>
           );
 
@@ -29,7 +32,7 @@ const cart = () => {
         </div>
 
         <Link to={{ pathname : "/checkout" }}> <button type="button" className="btn btn-info"> Proceed To Checkout </button> </Link>
-    </a>
+    </div>
     )
 }
 
