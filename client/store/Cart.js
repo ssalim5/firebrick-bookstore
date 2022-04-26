@@ -43,8 +43,13 @@ export const _setProducts = (products) => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`api/orders/${userId}`);
-      dispatch(_setProducts(data.books));
+      if(userId){
+        const {data} = await axios.get(`api/orders/${userId}`);
+
+        dispatch(_setProducts(data.books));
+
+      }
+
     } catch (err) {
       console.log(err);
     }
