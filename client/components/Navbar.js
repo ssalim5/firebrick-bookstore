@@ -5,6 +5,8 @@ import { logout } from "../store";
 import { useDispatch ,useSelector} from "react-redux";
 import { fetchBooks } from "../store/AllProducts";
 import { getUserThunk } from "../store/Users";
+import { fetchOrders } from "../store/Orders";
+
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
   const cartCounter = useSelector((state) => state.cart);
@@ -12,6 +14,7 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   useEffect(()=>{
     dispatch(fetchBooks())
     dispatch(getUserThunk())
+    dispatch(fetchOrders())
   },[input,setInput])
   return (
   <div className="container ">

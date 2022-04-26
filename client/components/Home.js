@@ -7,12 +7,15 @@ import Pagination from "./Pagination";
 import { _setCounter } from "../store/Cart";
 import Users from "./adminPageTables/Users";
 import Books from "./adminPageTables/Books";
+import Orders from "./adminPageTables/Orders";
+
 /**
  * COMPONENT
  */
 export const Home = () => {
   const books = useSelector((state) => state.allProducts);
   const users = useSelector((state) => state.users);
+  const orders = useSelector((state) => state.orders)
   const cart = useSelector((state) => state.cart);
   const {admin} = useSelector((state) => state.auth)
 
@@ -58,7 +61,7 @@ export const Home = () => {
   }else if (currentState === 'users'){
     showArray= users; // later make users
   }else{
-    showArray= []; // later make orders
+    showArray= orders; // later make orders
   }
 
 
@@ -97,7 +100,7 @@ export const Home = () => {
 
       <div className=" w-75">
 
-      {currentState === 'books' ? <Books currentProducts={currentProducts}/> : currentState ==='users' ? <Users currentProducts={currentProducts}/> : <Users currentProducts={currentProducts}/> }
+      {currentState === 'books' ? <Books currentProducts={currentProducts}/> : currentState ==='users' ? <Users currentProducts={currentProducts}/> : <Orders currentOrders={currentProducts}/> }
 
         <nav className="d-flex justify-content-center">
           <ul className="pagination">

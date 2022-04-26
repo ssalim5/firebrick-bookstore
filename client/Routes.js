@@ -10,6 +10,9 @@ import {me} from './store'
 import { fetchBooks } from './store/AllProducts';
 import About from './components/About';
 import EditBook from './components/adminPageTables/EditBook';
+import SingleOrder from './components/SingleOrder'
+import Checkout from './components/Checkout';
+
 /**
  * COMPONENT
  */
@@ -35,6 +38,8 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/userProfile/:userId" component={UserProfile}/>
             <Route path="/products/:productId" component={ SingleProduct } />
+            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route path="/checkout" component={Checkout} />
 
           </Switch>
         ) : (
