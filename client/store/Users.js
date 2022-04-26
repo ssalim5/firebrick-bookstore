@@ -42,6 +42,7 @@ export const addUserThunk = (user, userAdmin) => {
     if (userAdmin.admin) {
       try {
         const {data} =  await axios.post("/api/users",user);
+        const {dataN} = await axios.post(`/api/orders/${data.id}`)
         dispatch(addUser(data));
       } catch (err){
         console.log(err);
