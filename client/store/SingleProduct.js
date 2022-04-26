@@ -1,9 +1,11 @@
 import axios from "axios";
-
+import history from '../history'
 const initialState = {};
 
 const SET_BOOK = "SET_BOOK";
-const DELETE_BOOK = "DELETE_BOOK";
+const UPDATE_BOOK = 'UPDATE_BOOK';
+
+
 
 const _setBook = (book) => {
   return {
@@ -12,18 +14,20 @@ const _setBook = (book) => {
   };
 };
 
-const _deleteBook = (book) => {
+const _updateBook = (book) => {
   return {
-    type: DELETE_BOOK,
+    type : UPDATE_BOOK,
     book
-  };
+  }
 };
+
 
 export const fetchBook = (bookId) => {
   return async (dispatch) => {
     try {
       //Api link
       const {data} = await axios.get(`/api/books/${bookId}`);
+
       dispatch(_setBook(data));
     } catch (err) {
       console.log(err);
@@ -31,27 +35,42 @@ export const fetchBook = (bookId) => {
   };
 };
 
-export const deleteBook = (bookId, user) => {
+export const updateBookThunk = (book) => {
   return async (dispatch) => {
-    if(user.admin) {
-      try {
-        const {data} = await axios.delete(`/api/books/${bookId}`);
-        dispatch(_deleteBook(data));
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      //Nothing --> Page that denies
+    try{
+      console.log(book)
+      const {data:updated} = await axios.put(`/api/books/${book.id}`,book);
+      console.log('sdafsadfsdfsdafsdfsdafsadfsdf')
+      dispatch(_updateBook(updated))
+      history.push('/')
+    }catch(err){
+      console.log(err)
     }
-  };
-};
+  }
+}
+
+//this delete thunk added allProducts.js
+// export const deleteBook = (bookId, user) => {
+//   return async (dispatch) => {
+//     if(user.admin) {
+//       try {
+//         const {data} = await axios.delete(`/api/books/${bookId}`);
+//         dispatch(_deleteBook(data));
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     } else {
+//       //Nothing --> Page that denies
+//     }
+//   };
+// };
 
 export default (state = initialState, action) => {
   switch(action.type) {
     case SET_BOOK:
       return {...action.book};
-    case DELETE_BOOK:
-      return state.filter( element => element.id !== action.campus.id);
+    case UPDATE_BOOK:
+      return action.book;
     default:
       return state;
   }

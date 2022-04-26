@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username']
+      attributes: ['id', 'username','address','email','admin']
     })
     if(!users){
       let error = Error("Users not found")
@@ -72,7 +72,16 @@ router.delete("/:userId", async(req, res, next) => {
 router.put('/userprofile/:userId',async(req,res,next) => {
   try{
     const user = await User.findByPk(req.params.userId);
-    console.log(req.body)
+    res.send(await user.update(req.body));
+  }catch(err){
+    next(err)
+  }
+})
+
+
+router.put('/:userId',async(req,res,next) => {
+  try{
+    const user = await User.findByPk(req.params.userId);
     res.send(await user.update(req.body));
   }catch(err){
     next(err)

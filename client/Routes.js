@@ -9,6 +9,8 @@ import SingleProduct from './components/SingleProduct';
 import {me} from './store'
 import { fetchBooks } from './store/AllProducts';
 import About from './components/About';
+import EditBook from './components/adminPageTables/EditBook';
+import EditUser from './components/adminPageTables/EditUser';
 /**
  * COMPONENT
  */
@@ -30,7 +32,8 @@ class Routes extends Component {
 
             <Route path='/about' exact component={ About } />
 
-
+            <Route path="/book/:bookId" component={EditBook} />
+            <Route path="/user/:userId" component={EditUser} />
             <Route path="/cart" component={Cart} />
             <Route path="/userProfile/:userId" component={UserProfile}/>
             <Route path="/products/:productId" component={ SingleProduct } />

@@ -4,16 +4,20 @@ import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { useDispatch ,useSelector} from "react-redux";
 import { fetchBooks } from "../store/AllProducts";
+
 import { setCounter, fetchCart } from "../store/Cart";
 
-const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
+import { getUserThunk } from "../store/Users";
+const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
+  const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
   const cartCounter = useSelector((state) => state.cart);
   const [input, setInput] = useState('');
 
   useEffect(()=>{
     dispatch(fetchBooks())
+
+    dispatch(getUserThunk())
 
   },[input,setInput])
 
@@ -66,7 +70,9 @@ const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
           </li>
         </ul>
         </div>
-        <div>
+        {user.admin ? <a className= "text-white" href="#" onClick={handleClick}>
+              Logout
+            </a> : <div>
         {isLoggedIn ? (
           <div className="shopping-cart d-flex align-items-center position-relative">
             {/* The navbar will show these links after you log in */}
@@ -118,7 +124,8 @@ const Navbar = ({ handleClick, isLoggedIn, user, cart }) => {
             <Link className="text-white" to="/signup">Sign Up</Link>
           </div>
         )}
-      </div>
+      </div>}
+
       </div>
 
 

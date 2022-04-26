@@ -8,11 +8,13 @@ const TOKEN = 'token'
  */
 const SET_AUTH = 'SET_AUTH'
 const UPDATE_USER = 'UPDATE_USER';
+
 /**
  * ACTION CREATORS
  */
 const setAuth = auth => ({type: SET_AUTH, auth})
 const updateUser = user => ({type : UPDATE_USER,user})
+
 /**
  * THUNK CREATORS
  */
@@ -36,12 +38,14 @@ export const updateUserThunk = (user) => async dispatch => {
     console.log(user)
     const { data: updated } = await axios.put(`/api/users/userprofile/${user.id}`, user)
     history.push(`/userprofile/${user.id}`)
-    return dispatch(updateUser(updated))
+    dispatch(updateUser(updated))
 
   }catch(err){
     console.log(err)
   }
 }
+
+
 
 
 export const authenticate = (username, password, method, email, address) => async dispatch => {
@@ -54,6 +58,10 @@ export const authenticate = (username, password, method, email, address) => asyn
     return dispatch(setAuth({error: authError}))
   }
 }
+
+
+
+
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN)
@@ -73,6 +81,7 @@ export default function(state = {}, action) {
       return action.auth
     case UPDATE_USER:
       return action.user;
+
     default:
       return state
   }

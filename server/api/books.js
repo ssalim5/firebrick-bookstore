@@ -13,7 +13,11 @@ router.get("/", async(req, res, next) => {
 
     if(isEmpty(req.query)){
 
-      const books = await Book.findAll()
+      const books = await Book.findAll({
+        order : [
+          ['id', 'ASC'],
+        ]
+      })
       res.json(books)
     }else{
 
