@@ -7,6 +7,7 @@ import { fetchBooks } from "../store/AllProducts";
 import { getUserThunk } from "../store/Users";
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
+  console.log(user)
   const cartCounter = useSelector((state) => state.cart);
   const [input,setInput] =useState('')
   useEffect(()=>{
@@ -39,7 +40,9 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
           </li>
         </ul>
         </div>
-        <div>
+        {user.admin ? <a className= "text-white" href="#" onClick={handleClick}>
+              Logout
+            </a> : <div>
         {isLoggedIn ? (
           <div className="shopping-cart d-flex align-items-center position-relative">
             {/* The navbar will show these links after you log in */}
@@ -91,7 +94,8 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
             <Link className="text-white" to="/signup">Sign Up</Link>
           </div>
         )}
-      </div>
+      </div>}
+
       </div>
 
 

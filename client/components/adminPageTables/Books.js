@@ -39,7 +39,7 @@ const Books = ({currentProducts}) => {
           <td><input name='title' type="text" value={addBook.title} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
           <td><input name='price' type="text" value={addBook.price} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
           <td><input name='stock' type="text" value={addBook.stock} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
-          <td colSpan="2"><button type="button" className="btn btn-primary" onClick={() => {dispatch(addBookThunk(addBook,adminUser))
+          <td colSpan="2"><button type="button" className="btn btn-primary w-100" onClick={() => {dispatch(addBookThunk(addBook,adminUser))
           setAddBook({
             author : '',
             title : '',
