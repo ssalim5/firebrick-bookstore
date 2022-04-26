@@ -67,8 +67,9 @@ router.get( "/:userId/all", async(req, res, next) => {
 
 // GET /api/orders/user=:userId/order=:orderId
 // Get specific user's order and the books in it
-router.get("order=:orderId", async(req, res, next) => {
+router.get("/order=:orderId", async(req, res, next) => {
   try {
+    console.log("none");
     const userOrder = await Order.findOne({
       where: {id: req.params.orderId},
       include: Book
@@ -215,11 +216,19 @@ router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, nex
     await userOrder.removeBook(book);
     const newBook = await userOrder.addBook(book, {through:
       {
-        order_quantity: old_quantity+req.params.quantity,
-        subtotal_price: oldBook.price*(old_quantity+req.params.quantity)
+        order_quantity: old_quantity+Number(req.params.quantity),
+        subtotal_price: oldBook.price*(old_quantity+Number(req.params.quantity))
       }
     });
-    res.json(newBook);
+
+    const orderUpdate = await Order.findOne({
+      where: { userId: req.params.userId },
+      include:{
+        model: Book,
+        where: {id: req.params.bookId}
+      }
+    });
+    res.json(orderUpdate.books[0]);
   } catch (error) {
     next(error);
   }
@@ -290,7 +299,7 @@ router.post("/order=:orderId/book=:bookId/quantity=:quantity", async (req, res, 
         where: {id: req.params.bookId}
       }
     });
-    res.json(orderUpdate);
+    res.json(orderUpdate.book[0]);
   } catch (error) {
     next(error);
   }
