@@ -18,7 +18,6 @@ const EditBook = () => {
   stock : ''})
 
   useEffect(() =>{
-    console.log('useeffect')
     dispatch(fetchBooks())
   },[bookFromStore])
 
