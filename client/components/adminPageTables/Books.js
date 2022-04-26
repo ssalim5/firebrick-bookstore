@@ -17,7 +17,6 @@ const Books = ({currentProducts}) => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    console.log('effect')
     dispatch(fetchBooks())
   },[addBtnClicked,setAddBtnClicked])
   return (
