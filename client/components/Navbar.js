@@ -8,6 +8,8 @@ import { fetchBooks } from "../store/AllProducts";
 import { setCounter, fetchCart } from "../store/Cart";
 
 import { getUserThunk } from "../store/Users";
+import { fetchOrders } from "../store/Orders";
+
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
 
@@ -16,9 +18,8 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
 
   useEffect(()=>{
     dispatch(fetchBooks())
-
     dispatch(getUserThunk())
-
+    dispatch(fetchOrders())
   },[input,setInput])
 
   useEffect(() => {

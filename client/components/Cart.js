@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchCart} from "../store/Cart";
+import { Link } from "react-router-dom";
+
 
 const cart = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ const cart = () => {
         }): <div> No books in cart </div>}
         </div>
 
+        <Link to={{ pathname : "/checkout" }}> <button type="button" className="btn btn-info"> Proceed To Checkout </button> </Link>
     </a>
     )
 }

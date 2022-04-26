@@ -42,10 +42,13 @@ async function seed() {
   for(let i = 0; i < users.length; i++){
     const order = await Order.create()
     const completedOrder = await Order.create( {isCompleted: true} )
+    const completedOrder2 = await Order.create( {isCompleted: true} )
     orders.push(order)
     orders.push(completedOrder)
+    orders.push(completedOrder2)
     await order.setUser( await User.findByPk(i+1) )
     await completedOrder.setUser( await User.findByPk(i+1) )
+    await completedOrder2.setUser( await User.findByPk(i+1) )
   }
 
   console.log(orders.length, 'orders seeded.')
