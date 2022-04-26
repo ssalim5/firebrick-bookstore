@@ -72,7 +72,6 @@ router.delete("/:userId", async(req, res, next) => {
 router.put('/userprofile/:userId',async(req,res,next) => {
   try{
     const user = await User.findByPk(req.params.userId);
-    console.log(req.body)
     res.send(await user.update(req.body));
   }catch(err){
     next(err)
@@ -83,7 +82,6 @@ router.put('/userprofile/:userId',async(req,res,next) => {
 router.put('/:userId',async(req,res,next) => {
   try{
     const user = await User.findByPk(req.params.userId);
-    console.log(req.body)
     res.send(await user.update(req.body));
   }catch(err){
     next(err)
