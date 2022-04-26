@@ -40,7 +40,6 @@ router.get("/", async(req, res, next) => {
 // GET /api/books/:bookId
 router.get("/:bookId", async(req, res, next) => {
   try {
-    console.log('heyyyyyyy get')
     const book = await Book.findByPk(req.params.bookId)
     if(!book){
       let error = Error("Book not found")
