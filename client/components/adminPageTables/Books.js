@@ -1,13 +1,25 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Table } from "react-bootstrap";
 import { deleteBook } from '../../store/AllProducts';
-import { useDispatch} from "react-redux";
-import EditBook from './EditBook';
+import { useDispatch,useSelector} from "react-redux";
+import { addBookThunk,fetchBooks } from '../../store/AllProducts';
 import { Link } from "react-router-dom";
 
 const Books = ({currentProducts}) => {
-
+  const [addBook,setAddBook] = useState({
+    author : '',
+    title : '',
+    price : '',
+    stock : '',
+  });
+  const [addBtnClicked,setAddBtnClicked] = useState(0);
+  const adminUser = useSelector((state) => state.auth)
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    console.log('effect')
+    dispatch(fetchBooks())
+  },[addBtnClicked,setAddBtnClicked])
   return (
     <>
     <Table striped bordered hover className="me-2 ms-2">
@@ -21,6 +33,23 @@ const Books = ({currentProducts}) => {
           </tr>
         </thead>
         <tbody>
+        <tr>
+          <td>#</td>
+          <td><input name='author' type="text" value={addBook.author} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
+          <td><input name='title' type="text" value={addBook.title} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
+          <td><input name='price' type="text" value={addBook.price} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
+          <td><input name='stock' type="text" value={addBook.stock} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
+          <td colSpan="2"><button type="button" className="btn btn-primary" onClick={() => {dispatch(addBookThunk(addBook,adminUser))
+          setAddBook({
+            author : '',
+            title : '',
+            price : '',
+            stock : '',
+          })
+          setAddBtnClicked(addBtnClicked + 1)} } onMouseDown={(e) => {
+            e.preventDefault()
+             }}>Add</button></td>
+        </tr>
     {currentProducts.map((book,index) => {
 
       return(

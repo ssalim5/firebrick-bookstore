@@ -59,6 +59,10 @@ export const authenticate = (username, password, method, email, address) => asyn
   }
 }
 
+
+
+
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN)
   history.push('/login')
@@ -77,6 +81,7 @@ export default function(state = {}, action) {
       return action.auth
     case UPDATE_USER:
       return action.user;
+
     default:
       return state
   }

@@ -6,6 +6,7 @@ const SET_BOOK = "SET_BOOK";
 const UPDATE_BOOK = 'UPDATE_BOOK';
 
 
+
 const _setBook = (book) => {
   return {
     type: SET_BOOK,
@@ -18,13 +19,14 @@ const _updateBook = (book) => {
     type : UPDATE_BOOK,
     book
   }
-}
+};
+
 
 export const fetchBook = (bookId) => {
   return async (dispatch) => {
     try {
       //Api link
-      const {data} = await axios.put(`/api/books/${bookId}`);
+      const {data} = await axios.get(`/api/books/${bookId}`);
 
       dispatch(_setBook(data));
     } catch (err) {
