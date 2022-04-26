@@ -13,7 +13,11 @@ router.get("/", async(req, res, next) => {
 
     if(isEmpty(req.query)){
 
-      const books = await Book.findAll()
+      const books = await Book.findAll({
+        order : [
+          ['id', 'ASC'],
+        ]
+      })
       res.json(books)
     }else{
 
@@ -35,7 +39,6 @@ router.get("/", async(req, res, next) => {
 // GET /api/books/:bookId
 router.get("/:bookId", async(req, res, next) => {
   try {
-    console.log('heyyyyyyy get')
     const book = await Book.findByPk(req.params.bookId)
     if(!book){
       let error = Error("Book not found")

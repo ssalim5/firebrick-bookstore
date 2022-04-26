@@ -30,7 +30,7 @@ const _deleteBook = (id) => {
 
 
 
-export const addBook = (book, user) => {
+export const addBookThunk = (book, user) => {
   return async (dispatch) => {
     if (user.admin) {
       try {

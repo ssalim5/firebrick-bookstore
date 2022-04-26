@@ -1,21 +1,50 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { useDispatch ,useSelector} from "react-redux";
 import { fetchBooks } from "../store/AllProducts";
+
+import { setCounter, fetchCart } from "../store/Cart";
+
 import { getUserThunk } from "../store/Users";
 import { fetchOrders } from "../store/Orders";
 
 const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
   const dispatch = useDispatch()
+
   const cartCounter = useSelector((state) => state.cart);
-  const [input,setInput] =useState('')
+  const [input, setInput] = useState('');
+
   useEffect(()=>{
     dispatch(fetchBooks())
     dispatch(getUserThunk())
     dispatch(fetchOrders())
   },[input,setInput])
+
+  useEffect(() => {
+
+    async function getCart() {
+
+      await dispatch(fetchCart(user.id))
+      await dispatch(setCounter());
+    }
+    getCart();
+
+
+    }, [isLoggedIn])
+
+
+
+    // Guest returns after closing session, cart is filled based on local.storage
+
+    // User is logged in, cart is filled based on API call to database
+
+
+
+
+
+
   return (
   <div className="container ">
     <nav className="navbar navbar-expand-sm navbar-dark bg-primary rounded">
@@ -42,7 +71,9 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
           </li>
         </ul>
         </div>
-        <div>
+        {user.admin ? <a className= "text-white" href="#" onClick={handleClick}>
+              Logout
+            </a> : <div>
         {isLoggedIn ? (
           <div className="shopping-cart d-flex align-items-center position-relative">
             {/* The navbar will show these links after you log in */}
@@ -94,7 +125,8 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
             <Link className="text-white" to="/signup">Sign Up</Link>
           </div>
         )}
-      </div>
+      </div>}
+
       </div>
 
 

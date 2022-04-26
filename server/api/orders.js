@@ -41,6 +41,7 @@ router.get( "/:userId", async(req, res, next) => {
   }
 });
 
+
 // // GET /api/orders/user=:userId/all
 // // Get a user's completed orders
 router.get( "/:userId/all", async(req, res, next) => {
@@ -85,6 +86,7 @@ router.get("order=:orderId", async(req, res, next) => {
 
 // POST /api/orders
 // Create a cart, i.e. an unfulfilled order
+// When an item is first added to cart create an unfulfilled order
 router.post("/:userId", async(req, res, next) => {
   try {
     const order = await Order.create(req.body);
@@ -134,6 +136,7 @@ router.put("/:userId", async (req, res, next) => {
 
 // POST /api/orders/user=:userId/book=:bookId/quantity=:quantity
 // Add a new book to cart order
+// Add a new book to an order
 router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
@@ -178,6 +181,7 @@ router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, ne
 
 // PUT /api/orders/user=:userId/book=:bookId/quantity=:quantity
 // Update quantity of a book in cart order
+// Update quantity of a book in an order
 router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, next) => {
   try {
     const userOrder = await Order.findOne({
@@ -223,6 +227,7 @@ router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, nex
 
 // DELETE /api/orders/user=:userId/book=:bookId
 // Remove book from cart order
+// Remove book from order
 router.delete("/user=:userId/book=:bookId", async(req, res, next) => {
   try {
     const userOrder = await Order.findOne({
