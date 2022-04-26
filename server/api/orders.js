@@ -299,7 +299,7 @@ router.post("/order=:orderId/book=:bookId/quantity=:quantity", async (req, res, 
         where: {id: req.params.bookId}
       }
     });
-    res.json(orderUpdate.book[0]);
+    res.json(orderUpdate);
   } catch (error) {
     next(error);
   }
