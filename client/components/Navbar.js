@@ -24,14 +24,11 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
 
   useEffect(() => {
 
-    function getCart() {
-
-      dispatch(fetchCart(user.id))
-      dispatch(setCounter());
+    async function getCart() {
+      await dispatch(fetchCart(user.id))
+      await dispatch(setCounter());
     }
     getCart();
-
-
     }, [isLoggedIn])
 
 
