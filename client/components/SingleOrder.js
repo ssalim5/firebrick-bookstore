@@ -25,7 +25,7 @@ const SingleOrder = () => {
         Purchased on {order.updatedAt.slice(0, 10)} <br></br>
         <b> Delivery Address </b> <br></br>
         {order.user.address} <br></br>
-        Total: ${totalPrice} <br></br>
+        Total: {totalPrice} <br></br>
       </div>
       <Table striped bordered hover className="me-2 ms-2">
         <thead>
