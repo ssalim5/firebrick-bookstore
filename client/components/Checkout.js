@@ -26,11 +26,11 @@ const Checkout = () => {
   // const [email, setEmail] = useState(userOrder.user.email);
   let totalDollar = 0;
   if(userOrder){
-
     totalDollar = userOrder.productsArray.reduce((prev,curr) => {
       return prev + curr.order_products.subtotal_price
     },0)
   }
+
   console.log('dollar : ',totalDollar)
 
   return (
