@@ -25,7 +25,7 @@ const SingleOrder = () => {
         Purchased on {order.updatedAt.slice(0, 10)} <br></br>
         <b> Delivery Address </b> <br></br>
         {order.user.address} <br></br>
-        Total: {totalPrice} <br></br>
+        Total: {totalPrice.toFixed(2)} <br></br>
       </div>
       <Table striped bordered hover className="me-2 ms-2">
         <thead>
@@ -46,7 +46,7 @@ const SingleOrder = () => {
                 <td> {book.title} </td>
                 <td> {book.author} </td>
                 <td> {book.order_products.order_quantity} </td>
-                <td> {book.price.toFixed(2)} </td>
+                <td> {book.price} </td>
                 <td> {(book.price *book.order_products.order_quantity).toFixed(2)} </td>
                 <td> <button type="button" className="btn btn-success">Edit</button> </td>
                 <td> <button type="button" className="btn btn-danger" onClick={() => dispatch(deleteOrderBook(order.id, book.id)) }>Delete</button> </td>
