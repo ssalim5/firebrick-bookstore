@@ -9,26 +9,25 @@ const Checkout = () => {
 
   const {id} = useSelector((state) => state.auth)
 
-  const orders = useSelector((state) => state.orders)
+  //const orders = useSelector((state) => state.orders)
+
+  const cart = useSelector((state) => state.cart)
 
   const dispatch = useDispatch()
 
-  console.log("The user id is:", id)
+  console.log("The guest cart is:", cart)
 
-  let userOrder = orders.filter( (order) => {
-    return order.userId === id && !order.isCompleted
-  })[0]
+  let userOrder = cart;
 
   let totalItem = useSelector((state) => state.cart.counter)
   console.log("USER ORDER:", userOrder,totalItem)
-
 
   // const [address, setAddress] = useState(userOrder.user.address)
   // const [email, setEmail] = useState(userOrder.user.email);
   let totalDollar = 0;
   if(userOrder){
 
-    totalDollar = userOrder.books.reduce((prev,curr) => {
+    totalDollar = userOrder.productsArray.reduce((prev,curr) => {
       return prev + curr.order_products.subtotal_price
     },0)
   }
@@ -44,7 +43,7 @@ const Checkout = () => {
             <span className="badge badge-secondary badge-pill text-black">{totalItem} items</span>
           </h4>
           <ul className="list-group mb-3">
-            {userOrder ? userOrder.books.map((book,index) => {
+            {userOrder ? userOrder.productsArray.map((book,index) => {
               return (
                 <li key={index} className="list-group-item d-flex justify-content-between lh-condensed">
               <div>

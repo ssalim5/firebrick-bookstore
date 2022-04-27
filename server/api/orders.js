@@ -269,9 +269,11 @@ router.delete("/user=:userId/book=:bookId", async(req, res, next) => {
 
 router.post("/guestCheckout", async (req, res, next) => {
 
+  // Create user based on email and address
 
+  // attach cart to user
 
-
+  // checkout cart
 
 })
 
