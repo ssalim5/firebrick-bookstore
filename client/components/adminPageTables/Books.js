@@ -20,7 +20,7 @@ const Books = ({currentProducts}) => {
     dispatch(fetchBooks())
   },[addBtnClicked,setAddBtnClicked])
   return (
-    <>
+    <div>
     <Table striped bordered hover className="me-2 ms-2">
         <thead>
           <tr>
@@ -35,7 +35,7 @@ const Books = ({currentProducts}) => {
         <tr>
           <td>#</td>
           <td><input name='author' type="text" value={addBook.author} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
-          <td><input name='title' type="text" value={addBook.title} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
+          <td><input className='w-100' name='title' type="text" value={addBook.title} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
           <td><input name='price' type="text" value={addBook.price} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
           <td><input name='stock' type="text" value={addBook.stock} onChange= {(e) => setAddBook({...addBook, [e.target.name] : e.target.value})}></input></td>
           <td colSpan="2"><button type="button" className="btn btn-primary w-100" onClick={() => {dispatch(addBookThunk(addBook,adminUser))
@@ -66,7 +66,7 @@ const Books = ({currentProducts}) => {
     })}
     </tbody>
     </Table>
-    </>
+    </div>
   )
 };
 
