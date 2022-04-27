@@ -18,9 +18,15 @@ export const UserProfile = (props) => {
     address : address,
   }
   console.log(props)
+  const orders = useSelector((state) => state.orders)
+  let userOrder = orders.filter( (order) => {
+    return order.userId === user.id && order.isCompleted
+  })
+  console.log(userOrder)
+
   return (
-    <div className= "container mt-5">
-      <div>
+    <div className= "container d-flex w-100 justify-content-evenly mt-5">
+      <div className="">
         <Form onSubmit={(e) => {
           e.preventDefault()
           console.log('heyy')
@@ -67,6 +73,27 @@ export const UserProfile = (props) => {
           </Link>
           </div>
         </Form>
+      </div>
+      <div className="mt-5">
+            {userOrder.map((order)=>{
+              const {totalPrice, totalQuantity} = order.books
+              .reduce((prev, curr) => {
+                prev.totalPrice += curr.order_products.subtotal_price;
+                prev.totalQuantity += curr.order_products.order_quantity;
+                return prev;
+              }, {totalPrice: 0, totalQuantity: 0 });
+              return (
+                <div className='mt-3'>
+                  <b> Purchase Details </b> <br></br>
+
+                  {totalQuantity} items <br></br>
+                  Purchased on {order.updatedAt.slice(0, 10)} <br></br>
+                  <b> Delivery Address </b> <br></br>
+                  {order.user.address} <br></br>
+                  Total : {'$' +totalPrice} <br></br>
+                </div>
+              )
+            })}
       </div>
 
     </div>
