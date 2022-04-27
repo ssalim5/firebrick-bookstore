@@ -35,9 +35,9 @@ const cart = () => {
                       </div>
                   </div>
                   <div className=" qty col d-flex justify-content-center align-items-center">
-                    <i onClick={() => {dispatch(addItem(user.id, book, -1)); dispatch(setCounter());}} className="fa fa-minus text-danger m-2"></i>
+                    <i onClick={async () => {await dispatch(addItem(user.id, book, -1)); dispatch(setCounter());}} className="fa fa-minus text-danger m-2"></i>
                     <h5 className="text-grey m-2">{book.order_products.order_quantity}</h5>
-                    <i onClick={() => {dispatch(addItem(user.id, book, +1)); dispatch(setCounter());}} className="fa fa-plus text-success ms-1"></i>
+                    <i onClick={async () => {await dispatch(addItem(user.id, book, +1)); dispatch(setCounter());}} className="fa fa-plus text-success ms-1"></i>
                   </div>
                   <div className="col d-flex justify-content-center align-items-center ">
                     <h5 className="text-grey">${(book.price * book.order_products.order_quantity).toFixed(2)}</h5>
