@@ -31,9 +31,9 @@ const book = ({book, counter}) => {
               justifyContent: "space-between",
             }}
           >
-            <a className="btn btn-info text-white" onClick={(e) => {
+            <a className="btn btn-info text-white" onClick={ async(e) => {
               e.preventDefault()
-              dispatch(addItem(user.id,book,1))
+              await dispatch(addItem(user.id,book,1))
               dispatch(setCounter())
             }}>Add To Cart</a>
 
