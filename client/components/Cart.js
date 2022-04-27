@@ -43,7 +43,7 @@ const cart = () => {
                     <h5 className="text-grey">${(book.price * book.order_products.order_quantity).toFixed(2)}</h5>
                   </div>
                   <div className=" col d-flex justify-content-center align-items-center">
-                    <i onClick={() => {dispatch(deleteItem(user.id, book.id)); dispatch(setCounter());}}className="fa fa-trash mb-1 text-danger"></i>
+                    <i onClick={async () => {await dispatch(deleteItem(user.id, book.id)); dispatch(setCounter());}}className="fa fa-trash mb-1 text-danger"></i>
                   </div>
                 </div>
               )}) : <strong> No books in cart! </strong> }
