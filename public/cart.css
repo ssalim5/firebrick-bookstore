@@ -35,9 +35,21 @@ body {
 }
 
 .text-grey {
-    color: #a39f9f
+    color: black;
+    text-align: center;
+
 }
 
 .qty i {
-    font-size: 11px
+    font-size: 17px
+}
+
+.cart-header{
+  text-align: center;
+  font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(to right, #5a5dff 25%, #ee4b2b);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
 }

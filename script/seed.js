@@ -31,6 +31,7 @@ async function seed() {
   // Creating books
   let booksSeeded = []
   for (let i = 0; i < booksToSeed.books.length; i++){
+    booksToSeed.books[i].price.toFixed(2)
     const seededbook = await Book.create(booksToSeed.books[i]);
     booksSeeded.push(seededbook);
   }

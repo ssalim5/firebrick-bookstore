@@ -83,8 +83,8 @@ export const Home = () => {
     <div>
 
     {admin ?
-    <div className="container d-flex flex-row justify-content-between vh-100">
-      <div className="bg-white w-25 mt-5 aling-items-center">
+    <div className="container  vh-100">
+      <div className="mt-3 d-flex aling-items-center">
       {classes.map((name,index)=>{
         return (
           <div key={index} className="form-check mt-3 ms-2 p-2">
@@ -99,7 +99,7 @@ export const Home = () => {
       })}
       </div>
 
-      <div className=" w-75">
+      <div className="">
 
       {currentState === 'books' ? <Books currentProducts={currentProducts}/> : currentState ==='users' ? <Users currentProducts={currentProducts}/> : <Orders currentOrders={currentProducts}/> }
 

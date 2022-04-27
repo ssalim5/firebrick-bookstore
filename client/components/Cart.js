@@ -14,108 +14,41 @@ const cart = () => {
     dispatch(fetchCart(user.id));
   }, [dispatch])
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container mt-5 mb-5 vh-100">
       <div className="d-flex justify-content-center row">
-        <div className="col-md-8">
-            <div className="p-2">
-                <h4>Shopping cart</h4>
-                <div className="d-flex flex-row align-items-center pull-right"><span className="mr-1">Sort by:</span><span className="mr-1 font-weight-bold">Price</span><i className="fa fa-angle-down"></i></div>
+        <div className="col-md-12 ">
+            <div className=" p-2">
+                <h4 className="cart-header">Shopping Cart</h4>
             </div>
-            {books.productsArray.length > 0 ? books.productsArray.map( book => {
+            {books.productsArray.length > 0 ? books.productsArray.map((book) => {
+
               return (
-                // <div key={book.id}>
-                //   <img src={book.cover}></img>
-                //   <h1>{book.order_products.order_quantity} </h1>
-                //   <button onClick={async () => {
-                //     await dispatch(deleteItem(user.id, book.id));
-                //     dispatch(setCounter());
-                //   }}> Delete </button>
-                <div key={book.id}>
-                  <div className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                    <div className="mr-1"><img className="rounded" src={book.cover} width="70"/></div>
-                    <div className="d-flex flex-column align-items-center product-details"><span className="font-weight-bold">{book.title}</span>
-                      <div className="d-flex flex-row product-desc">
-                          <span className="font-weight-bold">&nbsp;{book.author}</span></div>
+
+                <div key={book.id} className="row bg-white m-4">
+
+                    <div className="col mr-1"><img className="rounded" src={book.cover} width="200" height='260' /></div>
+                    <div className="col d-flex justify-content-center align-items-center">
+
+                          <span className="font-weight-bold ">&nbsp;{book.author}</span>
                       </div>
+
+                    <div className=" qty col d-flex justify-content-center align-items-center"><i className="fa fa-minus text-danger m-2"></i>
+                      <h5 className="text-grey m-2">{book.order_products.order_quantity}</h5><i className="fa fa-plus text-success ms-1"></i>
                     </div>
-                    <div className="d-flex flex-row align-items-center qty"><i className="fa fa-minus text-danger"></i>
-                      <h5 className="text-grey mt-1 mr-1 ml-1">{book.order_products.order_quantity}</h5><i className="fa fa-plus text-success"></i>
+                    <div className="col d-flex justify-content-center align-items-center ">
+                      <h5 className="text-grey">${(book.price * book.order_products.order_quantity).toFixed(2)}</h5>
                     </div>
-                    <div>
-                      <h5 className="text-grey">${book.price}</h5>
-                    </div>
-                    <div className="d-flex align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
+                    <div className=" col d-flex justify-content-center align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
                   </div>
-              );
-            }): <div> No books in cart </div>}
-            {/* <div className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                <div className="mr-1"><img className="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"/></div>
-                <div className="d-flex flex-column align-items-center product-details"><span className="font-weight-bold">Basic T-shirt</span>
-                    <div className="d-flex flex-row product-desc">
-                        <div className="size mr-1"><span className="text-grey">Size:</span><span className="font-weight-bold">&nbsp;M</span></div>
-                        <div className="color"><span className="text-grey">Color:</span><span className="font-weight-bold">&nbsp;Grey</span></div>
-                    </div>
-                </div>
-                <div className="d-flex flex-row align-items-center qty"><i className="fa fa-minus text-danger"></i>
-                    <h5 className="text-grey mt-1 mr-1 ml-1">2</h5><i className="fa fa-plus text-success"></i>
-                </div>
-                <div>
-                    <h5 className="text-grey">$20.00</h5>
-                </div>
-                <div className="d-flex align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
-            </div>
-            <div className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                <div className="mr-1"><img className="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"/></div>
-                <div className="d-flex flex-column align-items-center product-details"><span className="font-weight-bold">Basic T-shirt</span>
-                    <div className="d-flex flex-row product-desc">
-                        <div className="size mr-1"><span className="text-grey">Size:</span><span className="font-weight-bold">&nbsp;M</span></div>
-                        <div className="color"><span className="text-grey">Color:</span><span className="font-weight-bold">&nbsp;Grey</span></div>
-                    </div>
-                </div>
-                <div className="d-flex flex-row align-items-center qty"><i className="fa fa-minus text-danger"></i>
-                    <h5 className="text-grey mt-1 mr-1 ml-1">2</h5><i className="fa fa-plus text-success"></i>
-                </div>
-                <div>
-                    <h5 className="text-grey">$20.00</h5>
-                </div>
-                <div className="d-flex align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
-            </div>
-            <div className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                <div className="mr-1"><img className="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"/></div>
-                <div className="d-flex flex-column align-items-center product-details"><span className="font-weight-bold">Basic T-shirt</span>
-                    <div className="d-flex flex-row product-desc">
-                        <div className="size mr-1"><span className="text-grey">Size:</span><span className="font-weight-bold">&nbsp;M</span></div>
-                        <div className="color"><span className="text-grey">Color:</span><span className="font-weight-bold">&nbsp;Grey</span></div>
-                    </div>
-                </div>
-                <div className="d-flex flex-row align-items-center qty"><i className="fa fa-minus text-danger"></i>
-                    <h5 className="text-grey mt-1 mr-1 ml-1">2</h5><i className="fa fa-plus text-success"></i>
-                </div>
-                <div>
-                    <h5 className="text-grey">$20.00</h5>
-                </div>
-                <div className="d-flex align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
-            </div>
-            <div className="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                <div className="mr-1"><img className="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"/></div>
-                <div className="d-flex flex-column align-items-center product-details"><span className="font-weight-bold">Basic T-shirt</span>
-                    <div className="d-flex flex-row product-desc">
-                        <div className="size mr-1"><span className="text-grey">Size:</span><span className="font-weight-bold">&nbsp;M</span></div>
-                        <div className="color"><span className="text-grey">Color:</span><span className="font-weight-bold">&nbsp;Grey</span></div>
-                    </div>
-                </div>
-                <div className="d-flex flex-row align-items-center qty"><i className="fa fa-minus text-danger"></i>
-                    <h5 className="text-grey mt-1 mr-1 ml-1">2</h5><i className="fa fa-plus text-success"></i>
-                </div>
-                <div>
-                    <h5 className="text-grey">$20.00</h5>
-                </div>
-                <div className="d-flex align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
-            </div>
-            <div className="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><input type="text" className="form-control border-0 gift-card" placeholder="discount code/gift card"/><button className="btn btn-outline-warning btn-sm ml-2" type="button">Apply</button></div>
-            <div className="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><button className="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button">Proceed to Pay</button></div> */}
+            )}): <p> No books in cart </p>}
         </div>
+
       </div>
+      <hr className="mb-4"/>
+      <Link to='/checkout'>
+
+            <button className="btn btn-primary btn-lg btn-block ms-4" type="submit">Proceed to Payment</button>
+      </Link>
     </div>
   )
 }

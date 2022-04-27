@@ -12,40 +12,41 @@ const Checkout = () => {
   let userOrder = orders.filter( (order) => {
     return order.userId === id && !order.isCompleted
   })[0]
-  console.log("USER ORDER:", userOrder)
+  let totalItem = useSelector((state) => state.cart.counter)
+  console.log("USER ORDER:", userOrder,totalItem)
   // const [address, setAddress] = useState(userOrder.user.address)
   // const [email, setEmail] = useState(userOrder.user.email);
+  let totalDolar = 0;
+  if(userOrder){
+
+    totalDolar = userOrder.books.reduce((prev,curr) => {
+      return prev + curr.order_products.subtotal_price
+    },0)
+  }
+  console.log('dolar : ',totalDolar)
+
   return (
     <div className="container">
 
-      <div className="row">
+      <div className="row mt-5">
         <div className="col-md-4 order-md-2 mb-4">
           <h4 className="d-flex justify-content-between align-items-center mb-3">
             <span className="text-muted">Your cart</span>
-            <span className="badge badge-secondary badge-pill">3</span>
+            <span className="badge badge-secondary badge-pill text-black">{totalItem} items</span>
           </h4>
           <ul className="list-group mb-3">
-            <li className="list-group-item d-flex justify-content-between lh-condensed">
+            {userOrder ? userOrder.books.map((book,index) => {
+              return (
+                <li key={index} className="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 className="my-0">Product name</h6>
-                <small className="text-muted">Brief description</small>
+                <h6 className="my-0">{book.title}</h6>
+                <small className="text-muted">{book.author}</small>
               </div>
-              <span className="text-muted">$12</span>
+              <span className="text-muted">{'$' + book.order_products.subtotal_price.toFixed(2)}</span>
             </li>
-            <li className="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 className="my-0">Second product</h6>
-                <small className="text-muted">Brief description</small>
-              </div>
-              <span className="text-muted">$8</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 className="my-0">Third item</h6>
-                <small className="text-muted">Brief description</small>
-              </div>
-              <span className="text-muted">$5</span>
-            </li>
+              )
+            }) : <></>}
+
             <li className="list-group-item d-flex justify-content-between bg-light">
               <div className="text-success">
                 <h6 className="my-0">Promo code</h6>
@@ -55,25 +56,25 @@ const Checkout = () => {
             </li>
             <li className="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>$20</strong>
+              <strong>{'$' + (totalDolar - 5).toFixed(2) }</strong>
             </li>
           </ul>
         </div>
 
         <div className="col-md-8 order-md-1">
-          <h4 className="mb-3">Billing address</h4>
-          <form className="needs-validation" noValidate>
+          <h4 className="mb-1">Billing address</h4>
+          <section className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label htmlFor="firstName">First name</label>
-                <input type="text" className="form-control" id="firstName" placeholder="" value="" required/>
+                <input type="text" className="form-control" id="firstName" placeholder=""  required/>
                 <div className="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="lastName">Last name</label>
-                <input type="text" className="form-control" id="lastName" placeholder="" value="" required/>
+                <input type="text" className="form-control" id="lastName" placeholder=""  required/>
                 <div className="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -87,7 +88,7 @@ const Checkout = () => {
                   <span className="input-group-text">@</span>
                 </div>
                 <input type="text" className="form-control" id="username" placeholder="Username" required/>
-                <div className="invalid-feedback" style={{width: '100%;'}}>
+                <div className="invalid-feedback">
                   Your username is required.
                 </div>
               </div>
@@ -158,15 +159,15 @@ const Checkout = () => {
 
             <div className="d-block my-3">
               <div className="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" checked required/>
+                <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" onChange={null} checked required/>
                 <label className="custom-control-label" htmlFor="credit">Credit card</label>
               </div>
               <div className="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" required/>
+                <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" onChange={null} required/>
                 <label className="custom-control-label" htmlFor="debit">Debit card</label>
               </div>
               <div className="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" required/>
+                <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" onChange={null} required/>
                 <label className="custom-control-label" htmlFor="paypal">Paypal</label>
               </div>
             </div>
@@ -205,7 +206,7 @@ const Checkout = () => {
             </div>
             <hr className="mb-4"/>
             <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-          </form>
+          </section>
         </div>
       </div>
     </div>
