@@ -13,6 +13,8 @@ const cart = () => {
   useEffect( () => {
     dispatch(fetchCart(user.id));
   }, [dispatch])
+
+
   return (
     <div className="container mt-5 mb-5 vh-100">
       <div className="d-flex justify-content-center row">

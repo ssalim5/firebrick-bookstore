@@ -6,24 +6,33 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Checkout = () => {
+
   const {id} = useSelector((state) => state.auth)
+
   const orders = useSelector((state) => state.orders)
+
   const dispatch = useDispatch()
+
+  console.log("The user id is:", id)
+
   let userOrder = orders.filter( (order) => {
     return order.userId === id && !order.isCompleted
   })[0]
+
   let totalItem = useSelector((state) => state.cart.counter)
   console.log("USER ORDER:", userOrder,totalItem)
+
+
   // const [address, setAddress] = useState(userOrder.user.address)
   // const [email, setEmail] = useState(userOrder.user.email);
-  let totalDolar = 0;
+  let totalDollar = 0;
   if(userOrder){
 
-    totalDolar = userOrder.books.reduce((prev,curr) => {
+    totalDollar = userOrder.books.reduce((prev,curr) => {
       return prev + curr.order_products.subtotal_price
     },0)
   }
-  console.log('dolar : ',totalDolar)
+  console.log('dollar : ',totalDollar)
 
   return (
     <div className="container">
@@ -56,7 +65,7 @@ const Checkout = () => {
             </li>
             <li className="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>{'$' + (totalDolar - 5).toFixed(2) }</strong>
+              <strong>{'$' + (totalDollar - 5).toFixed(2) }</strong>
             </li>
           </ul>
         </div>

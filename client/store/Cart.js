@@ -54,12 +54,9 @@ export const fetchCart = (userId) => {
         const {data} = await axios.get(`api/orders/${userId}`);
         dispatch(_setProducts(data.books));
         localStorage.setItem('guestData', JSON.stringify(data));
-        console.log("This is what a REAL cart looks like:", data);
       } else {
         try {
-          console.log("reading local storage")
           const data = JSON.parse(localStorage.getItem('guestData'));
-          console.log("Local data is:", data)
           dispatch(_setProducts(data.books));
         }
         catch{
