@@ -57,7 +57,7 @@ const Books = ({currentProducts}) => {
         <td>{book.id}</td>
         <td>{book.author}</td>
         <td>{book.title}</td>
-        <td>{book.price.toFixed(2)}</td>
+        <td>{book.price}</td>
         <td>{book.stock}</td>
         <td><Link to={{pathname :`/book/${book.id}`,state : {book : book}, }}><button type="button" className="btn btn-success">Edit</button></Link></td>
         <td><button type="button" className="btn btn-danger" onClick={() => dispatch(deleteBook(book.id)) } onMouseDown={(e) => e.preventDefault() }>Delete</button></td>
