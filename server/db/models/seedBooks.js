@@ -25,7 +25,7 @@ const books = [
     title: 'Culture Code',
     author: 'Daniel Coyle',
     cover: 'https://s2.adlibris.com/images/47378360/culture-code.jpg',
-    price: 12.200000000000001,
+    price: 12.21,
     stock: 56
   },
   {
@@ -39,7 +39,7 @@ const books = [
     title: 'The Culture Code: The Secrets of Highly Successful Groups',
     author: 'Daniel Coyle',
     cover: 'https://s2.adlibris.com/images/28963012/the-culture-code-the-secrets-of-highly-successful-groups.jpg',
-    price: 27.700000000000003,
+    price: 27.73,
     stock: 43
   },
   {
@@ -74,7 +74,7 @@ const books = [
     title: 'Representation',
     author: "Jerome",
     cover: 'https://s2.adlibris.com/images/2744193/representation.jpg',
-    price: 45.400000000000006,
+    price: 45.46,
     stock: 47
   },
   {
@@ -101,7 +101,7 @@ const books = [
     title: 'Så blir du bra på naturvetenskap',
     author: 'Carol Vorderman',
     cover: 'https://s2.adlibris.com/images/46537080/sa-blir-du-bra-pa-naturvetenskap.jpg',
-    price: 17.400000000000002,
+    price: 17.42,
     stock: 28
   },
   {
@@ -115,7 +115,7 @@ const books = [
     title: 'Engineering Mechanics: Dynamics in SI Units',
     author: 'Russell Hibbeler',
     cover: 'https://s1.adlibris.com/images/15701870/engineering-mechanics-dynamics-in-si-units.jpg',
-    price: 62.800000000000004,
+    price: 62.84,
     stock: 113
   },
   {
@@ -150,7 +150,7 @@ const books = [
     title: "Meriam's Engineering Mechanics",
     author: 'James L. Meriam',
     cover: 'https://s2.adlibris.com/images/54222254/meriams-engineering-mechanics.jpg',
-    price: 59.900000000000006,
+    price: 59.96,
     stock: 127
   },
   {
@@ -184,7 +184,7 @@ const books = [
     title: 'Clean Code in JavaScript',
     author: 'James Padolsey',
     cover: 'https://s1.adlibris.com/images/57415915/clean-code-in-javascript.jpg',
-    price: 42.900000000000006,
+    price: 42.96,
     stock: 36
   },
   {
@@ -212,35 +212,35 @@ const books = [
     title: 'Programmering 1 JavaScript',
     author: 'Mikael Tylmad',
     cover: 'https://s1.adlibris.com/images/42271919/programmering-1-javascript.jpg',
-    price: 52.800000000000004,
+    price: 52.84,
     stock: 28
   },
   {
     title: 'Programmering 1 med JScript, JavaScript och Java - Lärobok',
     author: 'Clas Örjan Spång',
     cover: 'https://s1.adlibris.com/images/51630353/programmering-1-med-jscript-javascript-och-java---larobok.jpg',
-    price: 38.900000000000006,
+    price: 38.96,
     stock: 90
   },
   {
     title: 'Learning PHP, MySQL & JavaScript',
     author: 'Robin Nixon',
     cover: 'https://s2.adlibris.com/images/60524103/learning-php-mysql-javascript.jpg',
-    price: 45.900000000000006,
+    price: 45.96,
     stock: 102
   },
   {
     title: 'JavaScript and JQuery – Interactive Front–End Web Development',
     author: 'J Duckett',
     cover: 'https://s1.adlibris.com/images/2385597/javascript-and-jquery---interactive-front-end-web-development.jpg',
-    price: 25.900000000000002,
+    price: 25.92,
     stock: 68
   },
   {
     title: 'JavaScript - The Definitive Guide',
     author: 'David Flanagan',
     cover: 'https://s2.adlibris.com/images/56630625/javascript---the-definitive-guide.jpg',
-    price: 47.900000000000006,
+    price: 47.96,
     stock: 83
   },
   {
@@ -282,7 +282,7 @@ const books = [
     title: 'A Medieval Songbook',
     author: 'Jerome',
     cover: 'https://s2.adlibris.com/images/60678378/a-medieval-songbook.jpg',
-    price: 78.10000000000001,
+    price: 78.11,
     stock: 127
   },
   {
@@ -303,7 +303,7 @@ const books = [
     title: 'Paolo Veronese and the Practice of Painting in Late Renaissance Venice',
     author: 'Diana Gisolfi',
     cover: 'https://s1.adlibris.com/images/27929149/paolo-veronese-and-the-practice-of-painting-in-late-renaissance-venice.jpg',
-    price: 50.900000000000006,
+    price: 50.96,
     stock: 39
   },
   {
@@ -324,7 +324,7 @@ const books = [
     title: 'Northern Renaissance Art',
     author: 'Susie Nash',
     cover: 'https://s1.adlibris.com/images/759368/northern-renaissance-art.jpg',
-    price: 23.400000000000002,
+    price: 23.42,
     stock: 33
   },
   {
@@ -352,7 +352,7 @@ const books = [
     title: 'Tidal Hydrology, Hydraulics and Scour at Bridges',
     author: 'Federal Highway Administration',
     cover: 'https://s2.adlibris.com/images/20359162/tidal-hydrology-hydraulics-and-scour-at-bridges.jpg',
-    price: 30.900000000000002,
+    price: 30.92,
     stock: 100
   },
   {
@@ -394,7 +394,7 @@ const books = [
     title: 'Hydrology and Water Resources Engineering',
     author: 'K.C. Patra',
     cover: 'https://s1.adlibris.com/images/8438566/hydrology-and-water-resources-engineering.jpg',
-    price: 46.300000000000004,
+    price: 46.34,
     stock: 53
   },
   {
@@ -408,7 +408,7 @@ const books = [
     title: 'Caligraphy Practice Sheets for Beginers',
     author: "Jerome",
     cover: 'https://s2.adlibris.com/images/59902894/caligraphy-practice-sheets-for-beginers.jpg',
-    price: 14.700000000000001,
+    price: 14.71,
     stock: 114
   },
   {
@@ -492,7 +492,7 @@ const books = [
     title: 'Egyptology Notebook: 6" X 9"',
     author: 'Richard B. Foster',
     cover: 'https://s1.adlibris.com/images/41363565/egyptology-notebook-6-x-9.jpg',
-    price: 10.700000000000001,
+    price: 10.71,
     stock: 119
   },
   {
@@ -506,7 +506,7 @@ const books = [
     title: 'Egyptology',
     author: 'Dugald Steer',
     cover: 'https://s1.adlibris.com/images/4214471/egyptology.jpg',
-    price: 28.900000000000002,
+    price: 28.92,
     stock: 89
   },
   {
@@ -520,28 +520,28 @@ const books = [
     title: 'Wonderful Things: A History of Egyptology 1',
     author: 'Jason Thompson',
     cover: 'https://s2.adlibris.com/images/57429030/wonderful-things-a-history-of-egyptology-1.jpg',
-    price: 30.900000000000002,
+    price: 30.92,
     stock: 78
   },
   {
     title: 'Tutankhamun Knew the Names of the Two Great Gods: Dt and nHH as Fundamental Concepts of Pharaonic Ideology',
     author: 'Steven R.W. Gregory',
     cover: 'https://s1.adlibris.com/images/62675672/tutankhamun-knew-the-names-of-the-two-great-gods-dt-and-nhh-as-fundamental-concepts-of-pharaonic-ideology.jpg',
-    price: 37.300000000000004,
+    price: 37.34,
     stock: 17
   },
   {
     title: 'Handbook For Travelers In The Islands Of Corsica And Sardinia (1868',
     author: 'John Murray',
     cover: 'https://s2.adlibris.com/images/14315837/handbook-for-travelers-in-the-islands-of-corsica-and-sardinia-1868.jpg',
-    price: 49.800000000000004,
+    price: 49.84,
     stock: 11
   },
   {
     title: 'Journal of a Landscape Painter in Corsica',
     author: "Jerome",
     cover: 'https://s1.adlibris.com/images/48954703/journal-of-a-landscape-painter-in-corsica.jpg',
-    price: 30.400000000000002,
+    price: 30.42,
     stock: 18
   },
   {
@@ -562,7 +562,7 @@ const books = [
     title: 'DK Eyewitness Corsica',
     author: 'DK Eyewitness',
     cover: 'https://s2.adlibris.com/images/23744903/dk-eyewitness-corsica.jpg',
-    price: 14.100000000000001,
+    price: 14.11,
     stock: 69
   },
   {
@@ -611,7 +611,7 @@ const books = [
     title: 'Corsica Sunflower Guide',
     author: 'Noel Rochford',
     cover: 'https://s1.adlibris.com/images/49277724/corsica-sunflower-guide.jpg',
-    price: 16.900000000000002,
+    price: 16.92,
     stock: 108
   },
   {
@@ -625,21 +625,21 @@ const books = [
     title: 'Early Christian & Byzantine Art',
     author: 'Lowden John',
     cover: 'https://s2.adlibris.com/images/5238027/early-christian-byzantine-art.jpg',
-    price: 43.900000000000006,
+    price: 43.96,
     stock: 109
   },
   {
     title: 'The Byzantine Art of War',
     author: 'Decker Michael J.',
     cover: 'https://s1.adlibris.com/images/25912386/the-byzantine-art-of-war.jpg',
-    price: 27.200000000000003,
+    price: 27.23,
     stock: 6
   },
   {
     title: 'Byzantine Art',
     author: 'Robin Cormack',
     cover: 'https://s1.adlibris.com/images/31508886/byzantine-art.jpg',
-    price: 23.400000000000002,
+    price: 23.42,
     stock: 38
   },
   {
@@ -688,14 +688,14 @@ const books = [
     title: 'Byzantine Military Tactics in Syria and Mesopotamia in the 10th Century',
     author: 'Georgios Theotokis',
     cover: 'https://s2.adlibris.com/images/29843614/byzantine-military-tactics-in-syria-and-mesopotamia-in-the-10th-century.jpg',
-    price: 32.300000000000004,
+    price: 32.34,
     stock: 25
   },
   {
     title: 'Byzantine and Renaissance Philosophy',
     author: 'Peter Adamson',
     cover: 'https://s1.adlibris.com/images/61231696/byzantine-and-renaissance-philosophy.jpg',
-    price: 28.900000000000002,
+    price: 28.92,
     stock: 121
   },
   {
@@ -758,7 +758,7 @@ const books = [
     title: 'French Country Cooking: Meals and Moments from a Village in the Vineyards: A Cookbook',
     author: 'Mimi Thorisson',
     cover: 'https://s2.adlibris.com/images/23978781/french-country-cooking-meals-and-moments-from-a-village-in-the-vineyards-a-cookbook.jpg',
-    price: 34.800000000000004,
+    price: 34.84,
     stock: 98
   },
   {
@@ -772,14 +772,14 @@ const books = [
     title: 'Slowcooking - Introduktion och 80 recept som alla kan laga',
     author: 'Linda Lagerstrand',
     cover: 'https://s1.adlibris.com/images/59147403/slowcooking---introduktion-och-80-recept-som-alla-kan-laga.jpg',
-    price: 26.900000000000002,
+    price: 26.92,
     stock: 127
   },
   {
     title: 'The Essentials of Classic Italian Cooking',
     author: 'Marcella Hazan',
     cover: 'https://s1.adlibris.com/images/5647951/the-essentials-of-classic-italian-cooking.jpg',
-    price: 26.200000000000003,
+    price: 26.23,
     stock: 14
   },
   {
@@ -821,14 +821,14 @@ const books = [
     title: 'Mountaineering in the Mont Blanc Range',
     author: 'Jean-Louis Laroche',
     cover: 'https://s1.adlibris.com/images/11641701/mountaineering-in-the-mont-blanc-range.jpg',
-    price: 20.200000000000003,
+    price: 20.23,
     stock: 55
   },
   {
     title: 'Negative Geology – A Cultural and Technical History of Early European Mountaineering',
     author: 'Axel Andersson',
     cover: 'https://s1.adlibris.com/images/59920388/negative-geology---a-cultural-and-technical-history-of-early-european-mountaineering.jpg',
-    price: 26.900000000000002,
+    price: 26.92,
     stock: 72
   },
   {
@@ -856,7 +856,7 @@ const books = [
     title: 'Sarek national park guide book: hiking, running and mountaineering',
     author: 'Karl-Johan Piehl',
     cover: 'https://s2.adlibris.com/images/58391732/sarek-national-park-guide-book-hiking-running-and-mountaineering.jpg',
-    price: 32.300000000000004,
+    price: 32.34,
     stock: 49
   },
   {

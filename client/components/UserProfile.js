@@ -4,6 +4,8 @@ import {useState} from 'react'
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {updateUserThunk} from '../store/auth';
+import { Table } from "react-bootstrap";
+
 
 export const UserProfile = (props) => {
   const dispatch = useDispatch();
@@ -75,6 +77,17 @@ export const UserProfile = (props) => {
         </Form>
       </div>
       <div className="mt-5">
+        <div className="p-3">
+          <strong p> Order History </strong>
+        </div>
+        <Table striped bordered hover className="me-2 ms-2">
+          <thead>
+            <tr>
+              <th> id </th>
+              <th> Order Date </th>
+            </tr>
+          </thead>
+          <tbody>
             {userOrder.map((order)=>{
               const {totalPrice, totalQuantity} = order.books
               .reduce((prev, curr) => {
@@ -83,17 +96,24 @@ export const UserProfile = (props) => {
                 return prev;
               }, {totalPrice: 0, totalQuantity: 0 });
               return (
-                <div className='mt-3'>
-                  <b> Purchase Details </b> <br></br>
+                <tr key={order.id}>
+                  <td>{order.id}</td>
+                  <td>{order.createdAt.slice(0,10)}</td>
+                  <td> <Link to={{pathname : `/orders/${order.id}`, state : {order : order}, }}> <button type="button" className="btn btn-info">View Details</button> </Link> </td>
+                  {/* <div className='mt-3'>
+                    <b> Purchase Details </b> <br></br>
 
-                  {totalQuantity} items <br></br>
-                  Purchased on {order.updatedAt.slice(0, 10)} <br></br>
-                  <b> Delivery Address </b> <br></br>
-                  {order.user.address} <br></br>
-                  Total : {'$' +totalPrice} <br></br>
-                </div>
+                    {totalQuantity} items <br></br>
+                    Purchased on {order.updatedAt.slice(0, 10)} <br></br>
+                    <b> Delivery Address </b> <br></br>
+                    {order.user.address} <br></br>
+                    Total : {'$' +totalPrice} <br></br>
+                  </div> */}
+                </tr>
               )
             })}
+          </tbody>
+        </Table>
       </div>
 
     </div>

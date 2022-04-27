@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { usStates, countryList } from "../../public/statesAndCountries";
 import { submitOrder, createOrder } from "../store/Orders";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const Checkout = () => {
+  const history = useHistory()
   const {id} = useSelector((state) => state.auth)
   const orders = useSelector((state) => state.orders)
   const dispatch = useDispatch()
@@ -13,17 +13,16 @@ const Checkout = () => {
     return order.userId === id && !order.isCompleted
   })[0]
   let totalItem = useSelector((state) => state.cart.counter)
-  console.log("USER ORDER:", userOrder,totalItem)
+  console.log("USER ORDER:", userOrder, totalItem)
   // const [address, setAddress] = useState(userOrder.user.address)
   // const [email, setEmail] = useState(userOrder.user.email);
-  let totalDolar = 0;
+  let totalDollar = 0;
   if(userOrder){
-
-    totalDolar = userOrder.books.reduce((prev,curr) => {
+    totalDollar = userOrder.books.reduce((prev,curr) => {
       return prev + curr.order_products.subtotal_price
-    },0)
+    }, 0)
   }
-  console.log('dolar : ',totalDolar)
+  console.log('dollar : ', totalDollar)
 
   return (
     <div className="container">
@@ -40,29 +39,29 @@ const Checkout = () => {
                 <li key={index} className="list-group-item d-flex justify-content-between lh-condensed">
               <div>
                 <h6 className="my-0">{book.title}</h6>
-                <small className="text-muted">{book.author}</small>
+                <small className="text-muted">Qty: {book.order_products.order_quantity}</small>
               </div>
               <span className="text-muted">{'$' + book.order_products.subtotal_price.toFixed(2)}</span>
             </li>
               )
             }) : <></>}
 
-            <li className="list-group-item d-flex justify-content-between bg-light">
+            {/* <li className="list-group-item d-flex justify-content-between bg-light">
               <div className="text-success">
                 <h6 className="my-0">Promo code</h6>
                 <small>EXAMPLECODE</small>
               </div>
               <span className="text-success">-$5</span>
-            </li>
+            </li> */}
             <li className="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>{'$' + (totalDolar - 5).toFixed(2) }</strong>
+              <strong>{'$' + (totalDollar).toFixed(2) }</strong>
             </li>
           </ul>
         </div>
 
         <div className="col-md-8 order-md-1">
-          <h4 className="mb-1">Billing address</h4>
+          <h4 className="mb-1">Shipping Information</h4>
           <section className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6 mb-3">
@@ -83,14 +82,9 @@ const Checkout = () => {
 
             <div className="mb-3">
               <label htmlFor="username">Username</label>
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">@</span>
-                </div>
-                <input type="text" className="form-control" id="username" placeholder="Username" required/>
-                <div className="invalid-feedback">
-                  Your username is required.
-                </div>
+              <input type="text" className="form-control" id="username" placeholder="Username" required/>
+              <div className="invalid-feedback">
+                Your username is required.
               </div>
             </div>
 
@@ -120,7 +114,11 @@ const Checkout = () => {
                 <label htmlFor="country">Country</label>
                 <select className="custom-select d-block w-100" id="country" required>
                   <option value="">Choose...</option>
-                  <option>United States</option>
+                  { countryList.map( (country, idx) => {
+                    return (
+                      <option key={idx}>{country}</option>
+                    )
+                  })}
                 </select>
                 <div className="invalid-feedback">
                   Please select a valid country.
@@ -130,7 +128,11 @@ const Checkout = () => {
                 <label htmlFor="state">State</label>
                 <select className="custom-select d-block w-100" id="state" required>
                   <option value="">Choose...</option>
-                  <option>California</option>
+                  { usStates.map( (state, idx) => {
+                    return (
+                      <option key={idx}>{state.abbreviation}</option>
+                    )
+                  })}
                 </select>
                 <div className="invalid-feedback">
                   Please provide a valid state.
@@ -143,15 +145,6 @@ const Checkout = () => {
                   Zip code required.
                 </div>
               </div>
-            </div>
-            <hr className="mb-4"/>
-            <div className="custom-control custom-checkbox">
-              <input type="checkbox" className="custom-control-input" id="same-address"/>
-              <label className="custom-control-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-            </div>
-            <div className="custom-control custom-checkbox">
-              <input type="checkbox" className="custom-control-input" id="save-info"/>
-              <label className="custom-control-label" htmlFor="save-info">Save this information for next time</label>
             </div>
             <hr className="mb-4"/>
 
@@ -205,7 +198,21 @@ const Checkout = () => {
               </div>
             </div>
             <hr className="mb-4"/>
-            <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            <div className="d-flex">
+              <button className='btn btn-primary mr-auto p-2'
+                onClick={(e) => {
+                  e.preventDefault()
+                  dispatch(submitOrder(id))
+                  dispatch(createOrder(id))
+                  history.push('/')
+                  alert("Order successfully submitted")
+                }}> Submit Order </button>
+
+              <Link to="/cart">
+                <button className="btn btn-primary p-2"> Return to cart </button>
+              </Link>
+            </div>
+
           </section>
         </div>
       </div>
