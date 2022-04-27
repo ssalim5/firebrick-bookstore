@@ -27,15 +27,19 @@ const AuthForm = props => {
           <input name="password" type="password" required/>
         </div>
         {isSignup ?
-          <div>
+          <div className='d-flex flex-column'>
+            <div>
               <label htmlFor="email">
                 <small>Email</small>
               </label>
               <input name="email" type="email" />
+              </div>
+              <div>
               <label htmlFor="address">
                 <small>Address</small>
               </label>
               <input name="address" type="text" />
+          </div>
           </div>
           : null}
         <div>
