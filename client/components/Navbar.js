@@ -33,6 +33,7 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
 
 
 
+
     // Guest returns after closing session, cart is filled based on local.storage
 
     // User is logged in, cart is filled based on API call to database
