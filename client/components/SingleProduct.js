@@ -26,30 +26,32 @@ export const SingleProduct = () => {
   }, [dispatch]);
 
   return (
-    <div className='d-flex vh-100 m-5'>
-      <div className='bs-white w-25' >
-        <h3>Filter by Tags</h3>
-      </div>
-      <div className='bs-white w-75'>
-        <img style={{ height: "66%"}}
+    <div className='container col-md-6 mt-5'>
+        <div className='row'>
+        <div className='col-3 mb-2'>
+        <img
         src={book.cover} />
-        <h3>{book.title}</h3>
+        </div>
+        <div className='col ms-5'>
+        <p>{'Author : '+book.author}</p>
+        <h3 >{book.title}</h3>
+        </div>
         <div>
         {/* <a className="btn btn-info text-white">Add To Cart</a> */}
-        <a className="btn btn-info text-white" onClick={() => {
+        <a className="btn btn-info text-white me-2" onClick={() => {
               dispatch(addItem(user.id,book,1))
               dispatch(setCounter(books))
             }}>Add To Cart</a>
         <div style={{ display: "inline-block"}}>
-        <span className="price badge rounded-pill bg-warning text-dark d-flex align-items-center" width>
+        <span className="col ms-2 price badge rounded-pill bg-warning text-dark d-flex align-items-center" style={{ height: "55px"}}>
           {"$"}
           {Number.parseFloat(book.price).toFixed(2)}
         </span>
         </div>
         </div>
 
+        </div>
 
-      </div>
 
     </div>
   )

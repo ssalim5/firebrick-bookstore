@@ -14,26 +14,43 @@ const cart = () => {
     dispatch(fetchCart(user.id));
   }, [dispatch])
   return (
-    <div>
-      <div className="cart">
-        {books.productsArray.length > 0 ? books.productsArray.map( book => {
-          return (
-            <div key={book.id}>
-              <img src={book.cover}></img>
-              <h1>{book.order_products.order_quantity} </h1>
-              <button onClick={async () => {
-                await dispatch(deleteItem(user.id, book.id));
-                dispatch(setCounter());
-              }}> Delete </button>
+    <div className="container mt-5 mb-5 vh-100">
+      <div className="d-flex justify-content-center row">
+        <div className="col-md-12 ">
+            <div className=" p-2">
+                <h4 className="cart-header">Shopping Cart</h4>
             </div>
-          );
+            {books.productsArray.length > 0 ? books.productsArray.map((book) => {
 
-        }): <div> No books in cart </div>}
+              return (
+
+                <div key={book.id} className="row bg-white m-4">
+
+                    <div className="col mr-1"><img className="rounded" src={book.cover} width="200" height='260' /></div>
+                    <div className="col d-flex justify-content-center align-items-center">
+
+                          <span className="font-weight-bold ">&nbsp;{book.author}</span>
+                      </div>
+
+                    <div className=" qty col d-flex justify-content-center align-items-center"><i className="fa fa-minus text-danger m-2"></i>
+                      <h5 className="text-grey m-2">{book.order_products.order_quantity}</h5><i className="fa fa-plus text-success ms-1"></i>
+                    </div>
+                    <div className="col d-flex justify-content-center align-items-center ">
+                      <h5 className="text-grey">${(book.price * book.order_products.order_quantity).toFixed(2)}</h5>
+                    </div>
+                    <div className=" col d-flex justify-content-center align-items-center"><i className="fa fa-trash mb-1 text-danger"></i></div>
+                  </div>
+            )}): <p> No books in cart </p>}
         </div>
 
-        <Link to={{ pathname : "/checkout" }}> <button type="button" className="btn btn-info"> Proceed To Checkout </button> </Link>
+      </div>
+      <hr className="mb-4"/>
+      <Link to='/checkout'>
+
+            <button className="btn btn-primary btn-lg btn-block ms-4" type="submit">Proceed to Payment</button>
+      </Link>
     </div>
-    )
+  )
 }
 
 export default cart;

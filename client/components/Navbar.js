@@ -24,10 +24,10 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
 
   useEffect(() => {
 
-    async function getCart() {
+    function getCart() {
 
-      await dispatch(fetchCart(user.id))
-      await dispatch(setCounter());
+      dispatch(fetchCart(user.id))
+      dispatch(setCounter());
     }
     getCart();
 
@@ -64,11 +64,7 @@ const Navbar = ({ handleClick, isLoggedIn,user,cart }) => {
               About
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/" className="nav-link active">
-              Contact
-            </Link>
-          </li>
+
         </ul>
         </div>
         {user.admin ? <a className= "text-white" href="#" onClick={handleClick}>
