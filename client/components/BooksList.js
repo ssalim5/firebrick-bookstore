@@ -15,8 +15,7 @@ const book = ({book, counter}) => {
           <img
             style={{ height: "320px" }}
             className="card-img-top img-fluid rounded"
-            src={book.cover}
-          ></img>
+            src={book.cover}></img>
         </Link>
 
         <div className="card-body h-100  d-flex flex-column justify-content-between">

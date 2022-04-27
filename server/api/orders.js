@@ -265,6 +265,19 @@ router.delete("/user=:userId/book=:bookId", async(req, res, next) => {
   }
 });
 
+//* Guest Cart Checkout Route */
+
+router.post("/guestCheckout", async (req, res, next) => {
+
+
+
+
+
+})
+
+
+
+
 //***ADMIN ROUTES***
 // POST /api/orders/order=:orderId/book=:bookId/quantity=:quantity
 // Add a new book to an order
