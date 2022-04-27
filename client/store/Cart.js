@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const initialState = {counter : 0,
   productsArray : []};
 
@@ -41,12 +40,13 @@ export const _setProducts = (products) => {
     products
   }}
 
-const _editQuantity = (products) => {
+export const _editQuantity = (products) => {
   return {
     type: EDIT_QUANTITY,
     products
   }
 }
+
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
@@ -72,15 +72,19 @@ export const deleteItem = (userId, bookId) => {
    }
 }
 
-export const addItem = (userId,book,quantity) => {
+export const addItem = (userId, book, quantity) => {
   return async (dispatch) => {
     try {
       const {data : userBook} = await axios.get(`/api/orders/${userId}`);
       const userData = userBook.books.filter( element => element.id === book.id);
       if (userData.length > 0) {
+        if ( userData[0].order_products.order_quantity + quantity <= 0 ){
+          const {data} = await axios.delete(`api/orders/user=${userId}/book=${book.id}`);
+          dispatch(_deleteItem(data));
+        }
         const {data} = await axios.put(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
         dispatch(_editQuantity(data));
-      } else  {
+      } else {
         const {data} = await axios.post(`/api/orders/user=${userId}/book=${book.id}/quantity=${quantity}`);
         dispatch(_addItem(data));
       }
@@ -107,7 +111,7 @@ export default function(state = initialState, action) {
       return {...state, counter : cartTotalItems};
     }
     case ADD_ITEM:
-      return {...state, productsArray : [...state.productsArray,action.products]};
+      return {...state, productsArray : [...state.productsArray, action.products]};
     case SET_PRODUCTS:
       return {...state, productsArray: [...action.products]};
     case DELETE_ITEM: {

@@ -137,7 +137,6 @@ router.put("/:userId", async (req, res, next) => {
 
 // POST /api/orders/user=:userId/book=:bookId/quantity=:quantity
 // Add a new book to cart order
-// Add a new book to an order
 router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
@@ -182,7 +181,6 @@ router.post("/user=:userId/book=:bookId/quantity=:quantity", async (req, res, ne
 
 // PUT /api/orders/user=:userId/book=:bookId/quantity=:quantity
 // Update quantity of a book in cart order
-// Update quantity of a book in an order
 router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, next) => {
   try {
     const userOrder = await Order.findOne({
@@ -204,7 +202,7 @@ router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, nex
       throw error;
     }
 
-    const oldBook = (await Order.findOne({
+    let oldBook = (await Order.findOne({
       where: {id: userOrder.id},
       include:[{
         model: Book,
@@ -215,10 +213,10 @@ router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, nex
 
     await userOrder.removeBook(book);
     const newBook = await userOrder.addBook(book, {through:
-      {
-        order_quantity: old_quantity+Number(req.params.quantity),
-        subtotal_price: oldBook.price*(old_quantity+Number(req.params.quantity))
-      }
+        {
+          order_quantity: old_quantity+Number(req.params.quantity),
+          subtotal_price: oldBook.price*(old_quantity+Number(req.params.quantity))
+        }
     });
 
     const orderUpdate = await Order.findOne({
@@ -236,7 +234,6 @@ router.put( "/user=:userId/book=:bookId/quantity=:quantity", async(req, res, nex
 
 // DELETE /api/orders/user=:userId/book=:bookId
 // Remove book from cart order
-// Remove book from order
 router.delete("/user=:userId/book=:bookId", async(req, res, next) => {
   try {
     const userOrder = await Order.findOne({

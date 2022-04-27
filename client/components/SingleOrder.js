@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from "react-bootstrap";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { deleteOrderBook } from '../store/Orders';
 
@@ -8,6 +8,7 @@ const SingleOrder = () => {
   const dispatch = useDispatch()
   const location = useLocation();
   const {order} = location.state;
+  const {admin} = useSelector( (state) => state.auth )
 
   const {totalPrice, totalQuantity} = order.books
   .reduce((prev, curr) => {
@@ -48,8 +49,14 @@ const SingleOrder = () => {
                 <td> {book.order_products.order_quantity} </td>
                 <td> {book.price} </td>
                 <td> {(book.price *book.order_products.order_quantity).toFixed(2)} </td>
-                <td> <button type="button" className="btn btn-success">Edit</button> </td>
-                <td> <button type="button" className="btn btn-danger" onClick={() => dispatch(deleteOrderBook(order.id, book.id)) }>Delete</button> </td>
+                { admin ?
+                  <div>
+                    <td> <button type="button" className="btn btn-success">Edit</button> </td>
+                    <td> <button type="button" className="btn btn-danger" onClick={() => dispatch(deleteOrderBook(order.id, book.id)) }>Delete</button> </td>
+                  </div>
+                  : <div></div>
+                }
+
               </tr>
             );
           })}
